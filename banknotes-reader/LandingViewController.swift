@@ -13,6 +13,9 @@ class LandingViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        let customView = Dummy(frame: CGRect(x: 20, y: 100, width: 300, height: 150))
+        view.addSubview(customView)
     }
 
 
