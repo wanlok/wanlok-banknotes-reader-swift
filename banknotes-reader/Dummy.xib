@@ -18,12 +18,48 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vwj-4C-eXX">
+                    <rect key="frame" x="152.66666666666666" y="414" width="88" height="74"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQL-Wm-pKR">
+                            <rect key="frame" x="0.0" y="0.0" width="88" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Testing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9D9-lu-fWS">
+                            <rect key="frame" x="0.0" y="53" width="88" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="gQL-Wm-pKR" firstAttribute="leading" secondItem="Vwj-4C-eXX" secondAttribute="leading" id="254-fS-Al1"/>
+                        <constraint firstItem="9D9-lu-fWS" firstAttribute="top" secondItem="gQL-Wm-pKR" secondAttribute="bottom" constant="32" id="6bp-eQ-CIP"/>
+                        <constraint firstItem="gQL-Wm-pKR" firstAttribute="top" secondItem="Vwj-4C-eXX" secondAttribute="top" id="7na-jt-zmK"/>
+                        <constraint firstItem="9D9-lu-fWS" firstAttribute="leading" secondItem="Vwj-4C-eXX" secondAttribute="leading" id="Aul-hm-wA3"/>
+                        <constraint firstAttribute="trailing" secondItem="gQL-Wm-pKR" secondAttribute="trailing" id="VX6-Zm-b0m"/>
+                        <constraint firstAttribute="trailing" secondItem="9D9-lu-fWS" secondAttribute="trailing" id="gYu-Px-cLe"/>
+                        <constraint firstAttribute="bottom" secondItem="9D9-lu-fWS" secondAttribute="bottom" id="olS-Im-UUM"/>
+                    </constraints>
+                </view>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemRedColor"/>
+            <constraints>
+                <constraint firstItem="Vwj-4C-eXX" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="XJp-39-deG"/>
+                <constraint firstItem="Vwj-4C-eXX" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="kZV-py-fBS"/>
+            </constraints>
             <point key="canvasLocation" x="138" y="94"/>
         </view>
     </objects>
     <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
