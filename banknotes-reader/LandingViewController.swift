@@ -9,15 +9,16 @@ import UIKit
 
 class LandingViewController: UIViewController {
 
-    @IBOutlet weak var dummy: Dummy!
+    @IBOutlet weak var dummy: AmountView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+      
+        dummy.amountLabel.text = "\(50)"
+        dummy.currencyLabel.text = "\("AUD")"
     }
-
 
     /*
     // MARK: - Navigation
