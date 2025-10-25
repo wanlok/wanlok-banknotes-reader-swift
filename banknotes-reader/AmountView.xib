@@ -22,16 +22,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rwm-so-Z1n">
-                    <rect key="frame" x="32" y="74.333333333333329" width="256" height="191.33333333333337"/>
+                    <rect key="frame" x="0.0" y="74.333333333333329" width="320" height="191.33333333333337"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8wM-nd-CVS">
-                            <rect key="frame" x="0.0" y="0.0" width="256" height="143.33333333333334"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="143.33333333333334"/>
                             <fontDescription key="fontDescription" type="system" pointSize="120"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgz-ji-32b">
-                            <rect key="frame" x="0.0" y="143.33333333333331" width="256" height="48"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AUD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgz-ji-32b">
+                            <rect key="frame" x="0.0" y="143.33333333333331" width="320" height="48"/>
                             <fontDescription key="fontDescription" type="system" pointSize="40"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -52,9 +52,9 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Rwm-so-Z1n" secondAttribute="trailing" constant="32" id="ABd-cD-rGM"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Rwm-so-Z1n" secondAttribute="trailing" id="ABd-cD-rGM"/>
                 <constraint firstItem="Rwm-so-Z1n" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="Lh8-ro-uhX"/>
-                <constraint firstItem="Rwm-so-Z1n" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="QAi-hf-6Nh"/>
+                <constraint firstItem="Rwm-so-Z1n" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="QAi-hf-6Nh"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="336.23188405797106" y="-12.228260869565219"/>

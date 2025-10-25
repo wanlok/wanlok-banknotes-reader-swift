@@ -11,8 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LandingViewController" customModule="banknotes_reader" customModuleProvider="target">
             <connections>
+                <outlet property="amountView" destination="CxA-wT-lYv" id="YRM-Jo-Dj2"/>
                 <outlet property="arscnView" destination="eYN-9Z-Nf3" id="DPm-WB-lJH"/>
-                <outlet property="dummy" destination="CxA-wT-lYv" id="YRM-Jo-Dj2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,23 +25,23 @@
                     <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                 </arscnView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CxA-wT-lYv" customClass="AmountView" customModule="banknotes_reader" customModuleProvider="target">
-                    <rect key="frame" x="64" y="84" width="286" height="300"/>
+                    <rect key="frame" x="32" y="203" width="350" height="350"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="300" id="rab-G2-Pct"/>
+                        <constraint firstAttribute="width" secondItem="CxA-wT-lYv" secondAttribute="height" multiplier="1:1" id="J2A-lo-kGQ"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="CxA-wT-lYv" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="CyT-4P-5sf"/>
                 <constraint firstItem="eYN-9Z-Nf3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="NvK-Lq-LYy"/>
                 <constraint firstItem="eYN-9Z-Nf3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ru3-y0-Pkr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eYN-9Z-Nf3" secondAttribute="trailing" id="ak8-yH-tUc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="eYN-9Z-Nf3" secondAttribute="bottom" id="dC7-vX-XmY"/>
-                <constraint firstItem="CxA-wT-lYv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="64" id="e9M-IY-0Ee"/>
-                <constraint firstItem="CxA-wT-lYv" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="64" id="jw1-SA-YQ1"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CxA-wT-lYv" secondAttribute="trailing" constant="64" id="ove-Dz-8Mu"/>
+                <constraint firstItem="CxA-wT-lYv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="32" id="e9M-IY-0Ee"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CxA-wT-lYv" secondAttribute="trailing" constant="32" id="ove-Dz-8Mu"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="91.304347826086968"/>
         </view>
