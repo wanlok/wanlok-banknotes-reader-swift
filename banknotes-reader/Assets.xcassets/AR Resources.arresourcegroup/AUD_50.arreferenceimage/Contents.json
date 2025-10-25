@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "100.jpg",
+      "filename" : "AUD_50.jpg",
       "idiom" : "universal"
     }
   ],
@@ -10,6 +10,6 @@
     "version" : 1
   },
   "properties" : {
-    "width" : 0.158
+    "width" : 0.151
   }
 }

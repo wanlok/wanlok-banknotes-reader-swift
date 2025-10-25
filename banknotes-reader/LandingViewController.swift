@@ -31,10 +31,13 @@ class LandingViewController: UIViewController, ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor, let name = imageAnchor.referenceImage.name else { return }
-        DispatchQueue.main.async {
-            self.amountView.amountLabel.text = "\(name)"
-            self.amountView.currencyLabel.text = "\("AUD")"
-            self.amountView.isHidden = !imageAnchor.isTracked
+        let slices = name.split(separator: "_")
+        if slices.count == 2 {
+            DispatchQueue.main.async {
+                self.amountView.currencyLabel.text = "\(slices[0])"
+                self.amountView.amountLabel.text = "\(slices[1])"
+                self.amountView.isHidden = !imageAnchor.isTracked
+            }
         }
     }
 }
