@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		611F880969D2DEB7FAEA34F5 /* Pods_banknotes_reader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69AAC5A40B309271033E1628 /* Pods_banknotes_reader.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		2785CC0199D6D1F50B71D2F6 /* Pods-banknotes-reader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-banknotes-reader.release.xcconfig"; path = "Target Support Files/Pods-banknotes-reader/Pods-banknotes-reader.release.xcconfig"; sourceTree = "<group>"; };
 		537CE9FB2EA4CBC700A23C87 /* banknotes-reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "banknotes-reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		69AAC5A40B309271033E1628 /* Pods_banknotes_reader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_banknotes_reader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0ED638300C5BABBB32BAEB4 /* Pods-banknotes-reader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-banknotes-reader.debug.xcconfig"; path = "Target Support Files/Pods-banknotes-reader/Pods-banknotes-reader.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				611F880969D2DEB7FAEA34F5 /* Pods_banknotes_reader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +55,8 @@
 			children = (
 				537CE9FD2EA4CBC700A23C87 /* banknotes-reader */,
 				537CE9FC2EA4CBC700A23C87 /* Products */,
+				9482E8AAAA2305F43F1D744F /* Pods */,
+				D139AC1B13C1CD1B5643A932 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +68,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9482E8AAAA2305F43F1D744F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B0ED638300C5BABBB32BAEB4 /* Pods-banknotes-reader.debug.xcconfig */,
+				2785CC0199D6D1F50B71D2F6 /* Pods-banknotes-reader.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D139AC1B13C1CD1B5643A932 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				69AAC5A40B309271033E1628 /* Pods_banknotes_reader.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -65,6 +93,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 537CEA0E2EA4CBC900A23C87 /* Build configuration list for PBXNativeTarget "banknotes-reader" */;
 			buildPhases = (
+				807A5C29E7DC3EAAED4D7F65 /* [CP] Check Pods Manifest.lock */,
 				537CE9F72EA4CBC700A23C87 /* Sources */,
 				537CE9F82EA4CBC700A23C87 /* Frameworks */,
 				537CE9F92EA4CBC700A23C87 /* Resources */,
@@ -77,8 +106,6 @@
 				537CE9FD2EA4CBC700A23C87 /* banknotes-reader */,
 			);
 			name = "banknotes-reader";
-			packageProductDependencies = (
-			);
 			productName = "banknotes-reader";
 			productReference = 537CE9FB2EA4CBC700A23C87 /* banknotes-reader.app */;
 			productType = "com.apple.product-type.application";
@@ -127,6 +154,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		807A5C29E7DC3EAAED4D7F65 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-banknotes-reader-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		537CE9F72EA4CBC700A23C87 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -140,6 +192,7 @@
 /* Begin XCBuildConfiguration section */
 		537CEA0F2EA4CBC900A23C87 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B0ED638300C5BABBB32BAEB4 /* Pods-banknotes-reader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -173,6 +226,7 @@
 		};
 		537CEA102EA4CBC900A23C87 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2785CC0199D6D1F50B71D2F6 /* Pods-banknotes-reader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

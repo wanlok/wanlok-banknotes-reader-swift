@@ -10,7 +10,7 @@ import UIKit
 class SettingsLandingViewController: SettingsViewController {
     override var sections: [(title: String, items: [String])] {
         return [
-            (title: "Settings", items: ["Detection Method", "B", "C"]),
+            (title: "Settings", items: ["Detection Methods", "B", "C"]),
             (title: "Voice", items: ["A", "B"]),
             (title: "About", items: ["A", "B"])
         ]
