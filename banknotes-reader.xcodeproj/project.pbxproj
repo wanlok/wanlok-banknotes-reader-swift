@@ -74,7 +74,6 @@
 				B0ED638300C5BABBB32BAEB4 /* Pods-banknotes-reader.debug.xcconfig */,
 				2785CC0199D6D1F50B71D2F6 /* Pods-banknotes-reader.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

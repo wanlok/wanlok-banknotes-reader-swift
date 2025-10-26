@@ -9,6 +9,8 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    let identifier: String = "SettingsViewController"
+    
     var sections: [(title: String, items: [String])] {
         fatalError("Subclasses must override `sections`")
     }
@@ -19,7 +21,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SettingsTableViewCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +49,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
         return cell
     }
