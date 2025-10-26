@@ -2,54 +2,60 @@
 //  SettingsViewController.swift
 //  banknotes-reader
 //
-//  Created by Robert Wan on 19/10/2025.
+//  Created by Robert Wan on 26/10/2025.
 //
 
 import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let settings: [(title: String, items: [String])] = [
-        (title: "Settings", items: ["A", "B", "C"]),
-        (title: "Voice", items: ["A", "B"]),
-        (title: "About", items: ["A", "B"])
-    ]
-    
-    @IBOutlet weak var settingsTableView: UITableView!
-    
+    @IBOutlet weak var tableView: UITableView!
+
+    let sections: [(title: String, items: [String])]
+
+    init(sections: [(title: String, items: [String])]) {
+       self.sections = sections
+       super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+       fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SettingsTableViewCell")
+    }
     
-        
-        settingsTableView.dataSource = self
-        settingsTableView.delegate = self
-        settingsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "SettingsTableViewCell")
+    override func viewWillAppear(_ animated: Bool) {
+       super.viewWillAppear(animated)
+       if let tableView = view.subviews.compactMap({ $0 as? UITableView }).first,
+          let indexPath = tableView.indexPathForSelectedRow {
+           tableView.deselectRow(at: indexPath, animated: true)
+       }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return settings.count
+        return sections.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settings[section].items.count
+        return sections[section].items.count
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section].title
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 40 : 24
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableViewCell", for: indexPath)
-        let item = settings[indexPath.section].items[indexPath.row]
-        cell.textLabel?.text = item
+        cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return settings[section].title
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-      return section == 0 ? 40 : 24
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(indexPath.section) \(indexPath.row)")
     }
 }

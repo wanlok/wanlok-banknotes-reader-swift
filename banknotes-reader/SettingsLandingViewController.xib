@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
@@ -9,30 +9,30 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ARSCNViewController" customModule="banknotes_reader" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsLandingViewController" customModule="banknotes_reader" customModuleProvider="target">
             <connections>
-                <outlet property="arscnView" destination="Eyb-Tw-riw" id="YN3-y6-Hyn"/>
+                <outlet property="tableView" destination="3fJ-H4-k0g" id="70u-rG-ch2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eyb-Tw-riw">
-                    <rect key="frame" x="0.0" y="20" width="414" height="716"/>
-                </arscnView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3fJ-H4-k0g">
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Eyb-Tw-riw" secondAttribute="trailing" id="6m5-k5-T7I"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Eyb-Tw-riw" secondAttribute="bottom" id="BKi-EP-Fef"/>
-                <constraint firstItem="Eyb-Tw-riw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="TnK-u1-EVk"/>
-                <constraint firstItem="Eyb-Tw-riw" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="X49-eF-mRb"/>
+                <constraint firstItem="3fJ-H4-k0g" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1F2-pz-TzM"/>
+                <constraint firstItem="3fJ-H4-k0g" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="WId-TH-hHp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3fJ-H4-k0g" secondAttribute="trailing" id="pTX-Zv-rnM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3fJ-H4-k0g" secondAttribute="bottom" id="sna-2y-5NX"/>
             </constraints>
-            <point key="canvasLocation" x="141" y="111"/>
+            <point key="canvasLocation" x="140" y="110"/>
         </view>
     </objects>
     <resources>

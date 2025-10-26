@@ -18,11 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let arscnViewController = ARSCNViewController()
         arscnViewController.tabBarItem = UITabBarItem(title: "Camera", image: UIImage(systemName: "camera"), tag: 0)
 
-        let settingsViewController = SettingsViewController()
+        let settingsViewController = SettingsLandingViewController(sections: Settings.landing)
         settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)
 
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [arscnViewController, settingsViewController]
+        tabBarController.viewControllers = [
+            arscnViewController,
+            UINavigationController(rootViewController: settingsViewController)
+        ]
 
         // Apply Liquid Glass style (iOS 26+)
         if #available(iOS 26.0, *) {
