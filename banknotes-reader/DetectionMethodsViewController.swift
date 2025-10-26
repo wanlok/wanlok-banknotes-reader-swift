@@ -8,9 +8,15 @@
 import UIKit
 
 class DetectionMethodsViewController: SettingsViewController {
-    override var sections: [(title: String, rows: [String])] {
+    override var sections:  [(
+        title: String,
+        rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)]
+    )] {
         return [
-            (title: "Libraries", rows: ["ARKit", "B"])
+            (title: "Detection Methods", rows: [
+                (title: "ARKit", subtitle: nil, accessoryType: getDetectionMethodAccessoryType("ARKit")),
+                (title: "Dummy", subtitle: nil, accessoryType: getDetectionMethodAccessoryType("Dummy")),
+            ])
         ]
     }
     
@@ -19,6 +25,20 @@ class DetectionMethodsViewController: SettingsViewController {
         title = "Detection Methods"
     }
     
+    func getDetectionMethodAccessoryType(_ title: String) -> UITableViewCell.AccessoryType? {
+        guard let sceneDelegate = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate else {
+            return nil
+        }
+        let cameraViewController = sceneDelegate.getCameraViewController()
+        return if title == "ARKit" && cameraViewController is ARSCNViewController {
+            .checkmark
+        } else if title == "Dummy" && cameraViewController is DummyViewController {
+            .checkmark
+        } else {
+            nil
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let sceneDelegate = UIApplication.shared.connectedScenes
@@ -26,5 +46,6 @@ class DetectionMethodsViewController: SettingsViewController {
             return
         }
         sceneDelegate.changeCameraViewController(indexPath.row)
+        tableView.reloadData()
     }
 }

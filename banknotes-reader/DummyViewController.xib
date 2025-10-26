@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DummyViewController" customModule="banknotes_reader" customModuleProvider="target">
             <connections>
+                <outlet property="cameraView" destination="T0j-bD-ZW9" id="Znm-6S-VpR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,18 +20,18 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DummyViewController" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ph7-A9-Gm2">
-                    <rect key="frame" x="121.66666666666669" y="367.66666666666669" width="171" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T0j-bD-ZW9">
+                    <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="ph7-A9-Gm2" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="Ece-gl-acy"/>
-                <constraint firstItem="ph7-A9-Gm2" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="XgS-LG-qfm"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="T0j-bD-ZW9" secondAttribute="trailing" id="8gu-vj-fWG"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="T0j-bD-ZW9" secondAttribute="bottom" id="DCG-og-V61"/>
+                <constraint firstItem="T0j-bD-ZW9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="R1C-4T-eFA"/>
+                <constraint firstItem="T0j-bD-ZW9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ZuO-3e-yi4"/>
             </constraints>
             <point key="canvasLocation" x="141" y="117"/>
         </view>

@@ -11,7 +11,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     let identifier: String = "SettingsViewController"
     
-    var sections: [(title: String, rows: [String])] {
+    var sections:  [(
+        title: String,
+        rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)]
+    )] {
         fatalError("Subclasses must override `sections`")
     }
     
@@ -44,7 +47,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 40 : 24
+        return sections[section].title == title ? 0 : 24
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,10 +58,14 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let cell else {
             fatalError("tableView cellForRowAt")
         }
-        cell.textLabel?.text = sections[indexPath.section].rows[indexPath.row]
-        cell.detailTextLabel?.text = "Dummy"
-        cell.accessoryType = .disclosureIndicator
-//        cell.accessoryType = .checkmark
+        let row = sections[indexPath.section].rows[indexPath.row]
+        cell.textLabel?.text = row.title
+        cell.detailTextLabel?.text = row.subtitle
+        if let accessoryType = row.accessoryType {
+            cell.accessoryType = accessoryType
+        } else {
+            cell.accessoryType = .none
+        }
         return cell
     }
 }

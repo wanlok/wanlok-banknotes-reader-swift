@@ -27,6 +27,11 @@ class ARSCNViewController: CameraViewController, ARSCNViewDelegate {
         arscnView.session.run(configuration)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        arscnView.session.pause()
+    }
+    
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor, let name = imageAnchor.referenceImage.name else { return }
         if imageAnchor.isTracked {

@@ -9,6 +9,10 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var tabBarController: UITabBarController?
+    
+    func getCameraViewController() -> UIViewController? {
+        return tabBarController?.viewControllers?[0]
+    }
 
     func changeCameraViewController(_ i: Int) {
         var cameraViewController: UIViewController;
