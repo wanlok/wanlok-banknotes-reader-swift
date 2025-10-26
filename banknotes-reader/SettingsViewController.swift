@@ -11,7 +11,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     let identifier: String = "SettingsViewController"
     
-    var sections: [(title: String, items: [String])] {
+    var sections: [(title: String, rows: [String])] {
         fatalError("Subclasses must override `sections`")
     }
     
@@ -21,7 +21,6 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +36,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].items.count
+        return sections[section].rows.count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -49,8 +48,17 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-        cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier)
+        if cell == nil {
+            cell = UITableViewCell(style: .value1, reuseIdentifier: identifier)
+        }
+        guard let cell else {
+            fatalError("tableView cellForRowAt")
+        }
+        cell.textLabel?.text = sections[indexPath.section].rows[indexPath.row]
+        cell.detailTextLabel?.text = "Dummy"
+        cell.accessoryType = .disclosureIndicator
+//        cell.accessoryType = .checkmark
         return cell
     }
 }

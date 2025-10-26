@@ -8,9 +8,9 @@
 import UIKit
 
 class DetectionMethodsViewController: SettingsViewController {
-    override var sections: [(title: String, items: [String])] {
+    override var sections: [(title: String, rows: [String])] {
         return [
-            (title: "Libraries", items: ["ARKit", "B"])
+            (title: "Libraries", rows: ["ARKit", "B"])
         ]
     }
     

@@ -8,11 +8,11 @@
 import UIKit
 
 class SettingsLandingViewController: SettingsViewController {
-    override var sections: [(title: String, items: [String])] {
+    override var sections: [(title: String, rows: [String])] {
         return [
-            (title: "Settings", items: ["Detection Methods", "B", "C"]),
-            (title: "Voice", items: ["A", "B"]),
-            (title: "About", items: ["A", "B"])
+            (title: "Settings", rows: ["Detection Methods", "B", "C"]),
+            (title: "Voice", rows: ["A", "B"]),
+            (title: "About", rows: ["A", "B"])
         ]
     }
     
