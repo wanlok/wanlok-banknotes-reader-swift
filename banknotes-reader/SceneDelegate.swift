@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let arscnViewController = ARSCNViewController()
         arscnViewController.tabBarItem = UITabBarItem(title: "Camera", image: UIImage(systemName: "camera"), tag: 0)
 
-        let settingsViewController = SettingsLandingViewController(sections: Settings.landing)
+        let settingsViewController = SettingsLandingViewController()
         settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)
 
         let tabBarController = UITabBarController()
