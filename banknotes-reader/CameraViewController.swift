@@ -17,6 +17,8 @@ class CameraViewController: UIViewController {
 
     private let spacing: CGFloat = 32
 
+    var image: UIImage?
+    
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var imageView: UIImageView!
 
@@ -70,6 +72,7 @@ class CameraViewController: UIViewController {
         let frameDelegate = FrameCaptureDelegate()
         frameDelegate.onFrameCaptured = { [weak self] image in
             Task { @MainActor in
+                self?.image = image
                 self?.imageView.image = image
             }
         }
