@@ -8,7 +8,6 @@
 import UIKit
 import AVFoundation
 
-@MainActor
 class CameraViewController: UIViewController {
 
     private var amountView: AmountView?
@@ -70,43 +69,42 @@ class CameraViewController: UIViewController {
 
         let frameDelegate = FrameCaptureDelegate()
         frameDelegate.onFrameCaptured = { [weak self] image in
-            // switch to main actor for UI update
             Task { @MainActor in
                 self?.imageView.image = image
             }
         }
         self.frameDelegate = frameDelegate
 
+        guard let device = AVCaptureDevice.default(for: .video),
+              let input = try? AVCaptureDeviceInput(device: device)
+        else { return }
+
+        if session.canAddInput(input) {
+            session.addInput(input)
+        }
+
+        let output = AVCaptureVideoDataOutput()
+        output.alwaysDiscardsLateVideoFrames = true
+        output.videoSettings = [
+            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA
+        ]
+        output.setSampleBufferDelegate(frameDelegate, queue: DispatchQueue(label: "camera.frame.queue"))
+
+        if session.canAddOutput(output) {
+            session.addOutput(output)
+        }
+
+        Task { @MainActor in
+            cameraView.layoutIfNeeded()
+            let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+            previewLayer.videoGravity = .resizeAspectFill
+            previewLayer.frame = cameraView.bounds
+            previewLayer.connection?.videoOrientation = .portrait
+            cameraView.layer.addSublayer(previewLayer)
+            self.previewLayer = previewLayer
+        }
+
         DispatchQueue.global(qos: .userInitiated).async {
-            guard let device = AVCaptureDevice.default(for: .video),
-                  let input = try? AVCaptureDeviceInput(device: device)
-            else { return }
-
-            if session.canAddInput(input) {
-                session.addInput(input)
-            }
-
-            let output = AVCaptureVideoDataOutput()
-            output.alwaysDiscardsLateVideoFrames = true
-            output.videoSettings = [
-                kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA
-            ]
-            output.setSampleBufferDelegate(frameDelegate, queue: DispatchQueue(label: "camera.frame.queue"))
-
-            if session.canAddOutput(output) {
-                session.addOutput(output)
-            }
-
-            DispatchQueue.main.async {
-                cameraView.layoutIfNeeded()
-                let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-                previewLayer.videoGravity = .resizeAspectFill
-                previewLayer.frame = cameraView.bounds
-                previewLayer.connection?.videoOrientation = .portrait
-                cameraView.layer.addSublayer(previewLayer)
-                self.previewLayer = previewLayer
-            }
-
             session.startRunning()
         }
     }
