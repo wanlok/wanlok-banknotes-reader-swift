@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DummyViewController" customModule="banknotes_reader" customModuleProvider="target">
             <connections>
                 <outlet property="cameraView" destination="T0j-bD-ZW9" id="Znm-6S-VpR"/>
+                <outlet property="imageView" destination="DM8-uM-g2D" id="2lO-7B-lor"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,14 +25,23 @@
                     <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DM8-uM-g2D">
+                    <rect key="frame" x="0.0" y="503" width="414" height="233"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="DM8-uM-g2D" secondAttribute="height" multiplier="16:9" id="r03-4m-Qi9"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="DM8-uM-g2D" secondAttribute="bottom" id="4LD-Bq-Y6g"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="T0j-bD-ZW9" secondAttribute="trailing" id="8gu-vj-fWG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="T0j-bD-ZW9" secondAttribute="bottom" id="DCG-og-V61"/>
                 <constraint firstItem="T0j-bD-ZW9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="R1C-4T-eFA"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="DM8-uM-g2D" secondAttribute="trailing" id="RmL-dl-5KR"/>
                 <constraint firstItem="T0j-bD-ZW9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ZuO-3e-yi4"/>
+                <constraint firstItem="DM8-uM-g2D" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fzw-ZX-ww5"/>
             </constraints>
             <point key="canvasLocation" x="141" y="117"/>
         </view>
