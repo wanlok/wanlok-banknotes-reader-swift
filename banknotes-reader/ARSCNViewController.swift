@@ -8,7 +8,7 @@
 import UIKit
 import ARKit
 
-class ARSCNViewController: CameraViewController, ARSCNViewDelegate {
+class ARSCNViewController: AmountDetectionViewController, ARSCNViewDelegate {
     
     @IBOutlet weak var arscnView: ARSCNView!
 

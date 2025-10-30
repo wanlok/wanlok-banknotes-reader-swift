@@ -10,12 +10,9 @@ import AVFoundation
 
 class CameraViewController: UIViewController {
 
-    private var amountView: AmountView?
     private var session: AVCaptureSession?
     private var previewLayer: AVCaptureVideoPreviewLayer?
     private var frameDelegate: FrameCaptureDelegate?
-
-    private let spacing: CGFloat = 32
 
     var image: UIImage?
     
@@ -34,34 +31,6 @@ class CameraViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         previewLayer?.frame = cameraView.bounds
-    }
-
-    func showAmountView(currency: String, amount: String) {
-        guard amountView == nil else { return }
-
-        let amountView = AmountView()
-        amountView.translatesAutoresizingMaskIntoConstraints = false
-        amountView.isAccessibilityElement = true
-        amountView.currencyLabel.text = currency
-        amountView.amountLabel.text = amount
-        amountView.accessibilityLabel = "\(currency) \(amount)"
-        self.amountView = amountView
-        view.addSubview(amountView)
-
-        NSLayoutConstraint.activate([
-            amountView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: spacing),
-            amountView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -spacing),
-            amountView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            amountView.heightAnchor.constraint(equalTo: amountView.widthAnchor)
-        ])
-
-        UIAccessibility.post(notification: .layoutChanged, argument: amountView)
-    }
-
-    func hideAmountView() {
-        guard amountView != nil else { return }
-        amountView?.removeFromSuperview()
-        amountView = nil
     }
 
     func setupCameraView(_ cameraView: UIView) {
