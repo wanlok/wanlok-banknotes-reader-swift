@@ -18,7 +18,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		537CEA0D2EA4CBC900A23C87 /* Exceptions for "banknotes-reader" folder in "banknotes-reader" target */ = {
+		53ABF1882EB3690A009F58D0 /* Exceptions for "banknotes-reader" folder in "banknotes-reader" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -31,7 +31,7 @@
 		537CE9FD2EA4CBC700A23C87 /* banknotes-reader */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				537CEA0D2EA4CBC900A23C87 /* Exceptions for "banknotes-reader" folder in "banknotes-reader" target */,
+				53ABF1882EB3690A009F58D0 /* Exceptions for "banknotes-reader" folder in "banknotes-reader" target */,
 			);
 			path = "banknotes-reader";
 			sourceTree = "<group>";
