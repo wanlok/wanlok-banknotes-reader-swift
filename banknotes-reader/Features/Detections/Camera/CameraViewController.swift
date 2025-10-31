@@ -8,7 +8,11 @@
 import UIKit
 import AVFoundation
 
-class CameraViewController: UIViewController {
+protocol ImageCapture {
+    func imageCaptured(_ image: UIImage)
+}
+
+class CameraViewController: UIViewController, ImageCapture {
 
     private var session: AVCaptureSession?
     private var previewLayer: AVCaptureVideoPreviewLayer?
@@ -17,7 +21,7 @@ class CameraViewController: UIViewController {
     var image: UIImage?
     
     @IBOutlet weak var cameraView: UIView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +45,7 @@ class CameraViewController: UIViewController {
         let frameDelegate = FrameCaptureDelegate()
         frameDelegate.onFrameCaptured = { [weak self] image in
             Task { @MainActor in
-                self?.image = image
-                self?.imageView.image = image
+                self?.imageCaptured(image)
             }
         }
         self.frameDelegate = frameDelegate
@@ -79,5 +82,9 @@ class CameraViewController: UIViewController {
         DispatchQueue.global(qos: .userInitiated).async {
             session.startRunning()
         }
+    }
+    
+    func imageCaptured(_ image: UIImage) {
+        imageView?.image = image
     }
 }

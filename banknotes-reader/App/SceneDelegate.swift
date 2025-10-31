@@ -10,7 +10,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var tabBarController: UITabBarController?
     
-    func getCameraViewController() -> UIViewController? {
+    func getDetectionViewController() -> UIViewController? {
         return tabBarController?.viewControllers?[0]
     }
 
@@ -18,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var cameraViewController: UIViewController;
         if i == 0 {
             cameraViewController = ARSCNViewController()
+        } else if i == 1 {
+            cameraViewController = VisionViewController()
         } else {
             cameraViewController = DummyViewController()
         }

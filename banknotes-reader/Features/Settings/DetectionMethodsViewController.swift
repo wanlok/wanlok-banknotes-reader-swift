@@ -15,6 +15,7 @@ class DetectionMethodsViewController: SettingsViewController {
         return [
             (title: "Detection Methods", rows: [
                 (title: "ARKit", subtitle: nil, accessoryType: getDetectionMethodAccessoryType("ARKit")),
+                (title: "Vision", subtitle: nil, accessoryType: getDetectionMethodAccessoryType("Vision")),
                 (title: "Dummy", subtitle: nil, accessoryType: getDetectionMethodAccessoryType("Dummy")),
             ])
         ]
@@ -30,10 +31,12 @@ class DetectionMethodsViewController: SettingsViewController {
             .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate else {
             return nil
         }
-        let cameraViewController = sceneDelegate.getCameraViewController()
-        return if title == "ARKit" && cameraViewController is ARSCNViewController {
+        let viewController = sceneDelegate.getDetectionViewController()
+        return if title == "ARKit" && viewController is ARSCNViewController {
             .checkmark
-        } else if title == "Dummy" && cameraViewController is DummyViewController {
+        } else if title == "Vision" && viewController is VisionViewController {
+            .checkmark
+        } else if title == "Dummy" && viewController is DummyViewController {
             .checkmark
         } else {
             nil

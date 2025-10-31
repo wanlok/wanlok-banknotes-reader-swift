@@ -44,9 +44,11 @@ class SettingsLandingViewController: SettingsViewController {
             .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate else {
             return nil
         }
-        let cameraViewController = sceneDelegate.getCameraViewController()
-        return if cameraViewController is ARSCNViewController {
+        let viewController = sceneDelegate.getDetectionViewController()
+        return if viewController is ARSCNViewController {
             "ARKit"
+        } else if viewController is VisionViewController {
+            "Vision"
         } else {
             "Dummy"
         }
