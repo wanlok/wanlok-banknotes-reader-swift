@@ -225,11 +225,12 @@ class VuforiaView:UIView {
 
             encoder.setDepthStencilState(mDepthStencilState)
             
-            var worldOriginProjectionMatrix = matrix_float4x4()
-            var worldOriginModelViewMatrix = matrix_float4x4()
-            if (getOrigin(&worldOriginProjectionMatrix.columns, &worldOriginModelViewMatrix.columns)) {
-                mRenderer.renderWorldOrigin(encoder: encoder, projectionMatrix: worldOriginProjectionMatrix, modelViewMatrix: worldOriginModelViewMatrix)
-            }
+            // 20251101 Avoid rendering the cube with axes
+//            var worldOriginProjectionMatrix = matrix_float4x4()
+//            var worldOriginModelViewMatrix = matrix_float4x4()
+//            if (getOrigin(&worldOriginProjectionMatrix.columns, &worldOriginModelViewMatrix.columns)) {
+//                mRenderer.renderWorldOrigin(encoder: encoder, projectionMatrix: worldOriginProjectionMatrix, modelViewMatrix: worldOriginModelViewMatrix)
+//            }
 
             var trackableProjection = matrix_float4x4()
             var trackableModelView = matrix_float4x4()
