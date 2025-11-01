@@ -100,8 +100,8 @@ class VuforiaView:UIView {
     
     
     required convenience init?(coder: NSCoder) {
-        // This view fills the whole screen
-        self.init(frame: UIScreen.main.bounds)
+        self.init(frame: .zero)
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 
     
