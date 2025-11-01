@@ -23,7 +23,7 @@ private let initDoneCallback: @convention(c) (UnsafeMutableRawPointer?) -> Void 
 class DummyViewController: UIViewController {
 
     @IBOutlet var mVuforiaView: VuforiaView!
-    var mTarget: Int32 = -1
+    var mTarget: Int32 = 0
     
     func initVuforiaAsync(orientation: UIInterfaceOrientation) {
         DispatchQueue.global(qos: .background).async {

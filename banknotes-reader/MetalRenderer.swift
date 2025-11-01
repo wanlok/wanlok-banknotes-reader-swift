@@ -66,7 +66,7 @@ class MetalRenderer {
     private var mLanderVertexCount:Int = 0
     private var mLanderTexture:MTLTexture!
 
-    private let colorRed = vector_float4(Float(1), Float(0), Float(0), Float(1))
+    private let colorRed = vector_float4(Float(0), Float(1), Float(0), Float(1))
     private let colorGrey = vector_float4(Float(0.8), Float(0.8), Float(0.8), Float(1.0))
 
 
@@ -272,15 +272,15 @@ class MetalRenderer {
         encoder?.setFragmentBytes(&color, length: MemoryLayout.size(ofValue: color), index: 0)
         encoder?.drawIndexedPrimitives(type: .line, indexCount: Int(Models.NUM_SQUARE_WIREFRAME_INDEX), indexType: .uint16, indexBuffer: mSquareWireframeIndices, indexBufferOffset: 0)
         
-        // Draw an axis
-        renderAxis(encoder: encoder, mvpBuffer: mAugmentationAxisMVP,
-                 projectionMatrix: projectionMatrix, modelViewMatrix: modelViewMatrix, scale: vector_float3(0.02, 0.02, 0.02))
-
-        // Draw the Astronaut
-        renderModel(encoder: encoder,
-                    vertices: mAstronautVertices, vertexCount: mAstronautVertexCount,
-                    textureCoordinates: mAstronautTextureCoordinates, texture: mAstronautTexture,
-                    mvpBuffer: mAugmentationMVP)
+//        // Draw an axis
+//        renderAxis(encoder: encoder, mvpBuffer: mAugmentationAxisMVP,
+//                 projectionMatrix: projectionMatrix, modelViewMatrix: modelViewMatrix, scale: vector_float3(0.02, 0.02, 0.02))
+//
+//        // Draw the Astronaut
+//        renderModel(encoder: encoder,
+//                    vertices: mAstronautVertices, vertexCount: mAstronautVertexCount,
+//                    textureCoordinates: mAstronautTextureCoordinates, texture: mAstronautTexture,
+//                    mvpBuffer: mAugmentationMVP)
     }
 
     

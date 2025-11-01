@@ -923,6 +923,19 @@ AppController::createObservers()
         return false;
     }
 
+    auto imageTargetConfig = vuImageTargetConfigDefault();
+    imageTargetConfig.databasePath = "banknotesReader.xml";
+    imageTargetConfig.targetName = "hundred-dollars-note-b";
+    imageTargetConfig.activate = VU_TRUE;
+
+    VuImageTargetCreationError imageTargetCreationError;
+    if (vuEngineCreateImageTargetObserver(mEngine, &mObjectObserver, &imageTargetConfig, &imageTargetCreationError) != VU_SUCCESS)
+    {
+        LOG("Error creating image target observer: 0x%02x", imageTargetCreationError);
+        mErrorMessageCallback("Error creating image target observer");
+        return false;
+    }
+    
 //    if (mTarget == IMAGE_TARGET_ID)
 //    {
 //        auto imageTargetConfig = vuImageTargetConfigDefault();
