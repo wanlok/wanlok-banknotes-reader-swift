@@ -1,5 +1,5 @@
 //
-//  VuforiaHelper.swift
+//  VuforiaUtils.swift
 //  banknotes-reader
 //
 //  Created by Robert Wan on 1/11/2025.
@@ -17,14 +17,14 @@ private let initDoneCallback: @convention(c) (UnsafeMutableRawPointer?) -> Void 
     }
 }
 
-func startVuforia(viewController: UIViewController, orientation: UIInterfaceOrientation) {
+func startVuforia(_ viewController: UIViewController) {
     DispatchQueue.global(qos: .background).async {
         var initConfig: VuforiaInitConfig = VuforiaInitConfig()
         initConfig.classPtr = UnsafeMutableRawPointer(Unmanaged.passUnretained(viewController).toOpaque())
         initConfig.errorCallback = errorCallback
         initConfig.initDoneCallback = initDoneCallback
         initConfig.vbRenderBackend = VuRenderVBBackendType(VU_RENDER_VB_BACKEND_METAL)
-        initConfig.interfaceOrientation = orientation
+        initConfig.interfaceOrientation = getOrientation()
         initAR(initConfig, mTarget)
     }
 }

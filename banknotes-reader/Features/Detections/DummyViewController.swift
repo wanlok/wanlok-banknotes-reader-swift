@@ -13,6 +13,6 @@ class DummyViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startVuforia(viewController: self, orientation: getOrientation())
+        startVuforia(self)
     }
 }
