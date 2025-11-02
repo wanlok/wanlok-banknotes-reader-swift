@@ -45,13 +45,14 @@ public:
         ErrorMessageCallback errorMessageCallback{};
         VuforiaEngineErrorCallback vuforiaEngineErrorCallback{};
         InitDoneCallback initDoneCallback{};
+        DetectionCallback detectionCallback{};
     };
 
     /// Initialize Vuforia. When the initialization is completed successfully the callback
     /// method initDoneCallback will be invoked.
     /// If initialization fails the error callback errorMessageCallback will be invoked.
     /// On Android the appData pointer should be a pointer to the Activity object.
-    void initAR(const InitConfig& initConfig, int target, DetectionCallback detectionCallback, char* fileName, char** targetNames, int targetCount);
+    void initAR(const InitConfig& initConfig, int target, char* fileName, char** targetNames, int targetCount);
 
     /// Start the AR session
     /// Call this method when the app resumes from paused.

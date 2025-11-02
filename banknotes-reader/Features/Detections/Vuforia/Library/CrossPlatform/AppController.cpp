@@ -47,14 +47,14 @@ constexpr float FAR_PLANE = 5.f;
  ===============================================================================*/
 
 void
-AppController::initAR(const InitConfig& initConfig, int target, DetectionCallback detectionCallback, char* fileName, char** targetNames, int targetCount)
+AppController::initAR(const InitConfig& initConfig, int target, char* fileName, char** targetNames, int targetCount)
 {
     mVbRenderBackend = initConfig.vbRenderBackend;
     mErrorMessageCallback = initConfig.errorMessageCallback;
     mVuforeEngineErrorCallback = initConfig.vuforiaEngineErrorCallback;
     mInitDoneCallback = initConfig.initDoneCallback;
+    mDetectionCallback = initConfig.detectionCallback;
     mTarget = target;
-    mDetectionCallback = detectionCallback;
 
     mGuideViewModelTarget = nullptr;
     

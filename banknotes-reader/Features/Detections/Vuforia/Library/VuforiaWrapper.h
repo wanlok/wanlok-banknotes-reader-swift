@@ -22,6 +22,7 @@ typedef struct
     void* classPtr;
     void (*errorCallback)(void*, const char*);
     void (*initDoneCallback)(void*);
+    void (*detectionCallback)(void*, const char*);
     VuRenderVBBackendType vbRenderBackend;
     UIInterfaceOrientation interfaceOrientation;
 } VuforiaInitConfig;
@@ -41,7 +42,7 @@ typedef void (*DetectionCallback)(const char* targetName);
 int getImageTargetId();
 int getModelTargetId();
 
-void initAR(VuforiaInitConfig config, int target, DetectionCallback detectionCallback, char* fileName, char** targetNames, int targetCount);
+void initAR(VuforiaInitConfig config, int target, char* fileName, char** targetNames, int targetCount);
 bool startAR();
 void stopAR();
 void deinitAR();

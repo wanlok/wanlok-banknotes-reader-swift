@@ -21,7 +21,7 @@ struct
     void* callbackClass = nullptr;
     void (*errorCallbackMethod)(void*, const char*) = nullptr;
     void (*initDoneCallbackMethod)(void*) = nullptr;
-
+    void (*detectionCallbackMethod)(void*, const char*) = nullptr;
 } gWrapperData;
 
 
@@ -47,12 +47,13 @@ getModelTargetId()
 
 
 void
-initAR(VuforiaInitConfig config, int target, DetectionCallback detectionCallback, char* fileName, char** targetNames, int targetCount)
+initAR(VuforiaInitConfig config, int target, char* fileName, char** targetNames, int targetCount)
 {
     // Hold onto pointers for later use by the lambda passed to initAR below
     gWrapperData.callbackClass = config.classPtr;
     gWrapperData.errorCallbackMethod = config.errorCallback;
     gWrapperData.initDoneCallbackMethod = config.initDoneCallback;
+    gWrapperData.detectionCallbackMethod = config.detectionCallback;
 
     // Create InitConfig structure and populate...
     AppController::InitConfig initConfig;
@@ -81,9 +82,12 @@ initAR(VuforiaInitConfig config, int target, DetectionCallback detectionCallback
         }
     };
     initConfig.initDoneCallback = []() { gWrapperData.initDoneCallbackMethod(gWrapperData.callbackClass); };
+    initConfig.detectionCallback = [](const char* targetName) {
+        gWrapperData.detectionCallbackMethod(gWrapperData.callbackClass, targetName);
+    };
 
     // Call AppController to initialize Vuforia ...
-    controller.initAR(initConfig, target, detectionCallback, fileName, targetNames, targetCount);
+    controller.initAR(initConfig, target, fileName, targetNames, targetCount);
 }
 
 
