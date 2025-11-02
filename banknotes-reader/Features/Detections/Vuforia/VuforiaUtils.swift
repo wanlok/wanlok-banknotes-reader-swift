@@ -18,15 +18,25 @@ private let initDoneCallback: @convention(c) (UnsafeMutableRawPointer?) -> Void 
 }
 
 func startVuforia(_ viewController: UIViewController) {
-    DispatchQueue.global(qos: .background).async {
-        var initConfig: VuforiaInitConfig = VuforiaInitConfig()
-        initConfig.classPtr = UnsafeMutableRawPointer(Unmanaged.passUnretained(viewController).toOpaque())
-        initConfig.errorCallback = errorCallback
-        initConfig.initDoneCallback = initDoneCallback
-        initConfig.vbRenderBackend = VuRenderVBBackendType(VU_RENDER_VB_BACKEND_METAL)
-        initConfig.interfaceOrientation = getOrientation()
-        initAR(initConfig, mTarget)
+    let names = ["hundred-dollars-note-b", "aud_50"]
+
+    let cNames = names.map { strdup($0) }
+
+    cNames.withUnsafeBufferPointer { buffer in
+        DispatchQueue.global(qos: .background).async {
+            var initConfig = VuforiaInitConfig()
+            initConfig.classPtr = UnsafeMutableRawPointer(Unmanaged.passUnretained(viewController).toOpaque())
+            initConfig.errorCallback = errorCallback
+            initConfig.initDoneCallback = initDoneCallback
+            initConfig.vbRenderBackend = VuRenderVBBackendType(VU_RENDER_VB_BACKEND_METAL)
+            initConfig.interfaceOrientation = getOrientation()
+
+            let mutablePtr = UnsafeMutablePointer(mutating: buffer.baseAddress)
+            initAR(initConfig, mTarget, mutablePtr, Int32(buffer.count))
+
+            for ptr in cNames {
+                free(ptr)
+            }
+        }
     }
 }
-
-

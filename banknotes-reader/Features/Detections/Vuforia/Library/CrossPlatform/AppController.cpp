@@ -47,7 +47,7 @@ constexpr float FAR_PLANE = 5.f;
  ===============================================================================*/
 
 void
-AppController::initAR(const InitConfig& initConfig, int target)
+AppController::initAR(const InitConfig& initConfig, int target, char** targetNames, int count)
 {
     mVbRenderBackend = initConfig.vbRenderBackend;
     mErrorMessageCallback = initConfig.errorMessageCallback;
@@ -56,13 +56,13 @@ AppController::initAR(const InitConfig& initConfig, int target)
     mTarget = target;
 
     mGuideViewModelTarget = nullptr;
-
+    
     if (!initVuforiaInternal(initConfig.appData))
     {
         return;
     }
 
-    if (!createObservers())
+    if (!createObservers(targetNames, count))
     {
         return;
     }
@@ -916,7 +916,7 @@ AppController::initErrorToString(VuErrorCode error)
 
 
 bool
-AppController::createObservers()
+AppController::createObservers(char** targetNames, int count)
 {
     auto devicePoseConfig = vuDevicePoseConfigDefault();
     VuDevicePoseCreationError devicePoseCreationError;
@@ -925,14 +925,10 @@ AppController::createObservers()
         LOG("Error creating device pose observer: 0x%02x", devicePoseCreationError);
         return false;
     }
-    
-    std::vector<const char*> targetNames = {
-        "hundred-dollars-note-b",
-        "aud_50",
-    };
 
-    for (const char* name : targetNames)
+    for (int i = 0; i < count; ++i)
     {
+        const char* name = targetNames[i];
         auto config = vuImageTargetConfigDefault();
         config.databasePath = "banknotesReader.xml";
         config.targetName = name;

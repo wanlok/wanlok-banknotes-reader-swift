@@ -40,7 +40,7 @@ typedef struct
 int getImageTargetId();
 int getModelTargetId();
 
-void initAR(VuforiaInitConfig config, int target);
+void initAR(VuforiaInitConfig config, int target, char** targetNames, int count);
 bool startAR();
 void stopAR();
 void deinitAR();
