@@ -452,104 +452,107 @@ AppController::getImageTargetResult(VuMatrix44F& projectionMatrix, VuMatrix44F& 
 bool
 AppController::getModelTargetResult(VuMatrix44F& projectionMatrix, VuMatrix44F& modelViewMatrix, VuMatrix44F& scaledModelViewMatrix)
 {
-    bool result = false;
-
-    if (mTarget != MODEL_TARGET_ID)
-    {
-        return false;
-    }
-
-    VuObservationList* observationList = nullptr;
-    REQUIRE_SUCCESS(vuObservationListCreate(&observationList));
-
-    if (vuStateGetModelTargetObservations(mVuforiaState, observationList) != VU_SUCCESS)
-    {
-        LOG("Error getting model target observations");
-        REQUIRE_SUCCESS(vuObservationListDestroy(observationList));
-        return false;
-    }
-
-    int numObservations = 0;
-    REQUIRE_SUCCESS(vuObservationListGetSize(observationList, &numObservations));
-
-    if (numObservations > 0)
-    {
-        VuObservation* observation = nullptr;
-        if (vuObservationListGetElement(observationList, 0, &observation) == VU_SUCCESS)
-        {
-            assert(observation);
-            assert(vuObservationIsType(observation, VU_OBSERVATION_MODEL_TARGET_TYPE) == VU_TRUE);
-            assert(vuObservationHasPoseInfo(observation) == VU_TRUE);
-
-            VuPoseInfo poseInfo;
-            REQUIRE_SUCCESS(vuObservationGetPoseInfo(observation, &poseInfo));
-
-            VuModelTargetObservationTargetInfo modelTargetInfo;
-            REQUIRE_SUCCESS(vuModelTargetObservationGetTargetInfo(observation, &modelTargetInfo));
-            if (poseInfo.poseStatus == VU_OBSERVATION_POSE_STATUS_NO_POSE)
-            {
-                VuGuideViewList* guideViewList;
-                REQUIRE_SUCCESS(vuGuideViewListCreate(&guideViewList));
-
-                if (vuModelTargetObserverGetGuideViews(mObjectObserver, guideViewList) != VU_SUCCESS)
-                {
-                    LOG("Error getting list of guide views");
-                }
-                else
-                {
-                    int32_t size;
-                    REQUIRE_SUCCESS(vuGuideViewListGetSize(guideViewList, &size));
-                    mGuideViewModelTarget = [&]() -> VuGuideView* {
-                        for (int i = 0; i < size; ++i)
-                        {
-                            VuGuideView* guideView = nullptr;
-                            REQUIRE_SUCCESS(vuGuideViewListGetElement(guideViewList, i, &guideView));
-                            const char* guideViewName = nullptr;
-                            REQUIRE_SUCCESS(vuGuideViewGetName(guideView, &guideViewName));
-
-                            // Note: We use the activeGuideViewName as we know there is a guide view for our dataset.
-                            //       When using Advanced Model Targets there may not be a guide view and
-                            //       activeGuideViewName will be NULL.
-                            if (strcmp(guideViewName, modelTargetInfo.activeGuideViewName) == 0)
-                            {
-                                return guideView;
-                            }
-                        }
-                        return nullptr;
-                    }();
-                    if (!mGuideViewModelTarget)
-                    {
-                        LOG("Error getting guide view details");
-                    }
-                }
-
-                REQUIRE_SUCCESS(vuGuideViewListDestroy(guideViewList));
-            }
-            else
-            {
-                mGuideViewModelTarget = nullptr;
-
-                projectionMatrix = mCurrentRenderState.projectionMatrix;
-
-                // Compute model-view matrix
-                auto modelMatrix = poseInfo.pose;
-                modelViewMatrix = vuMatrix44FMultiplyMatrix(mCurrentRenderState.viewMatrix, modelMatrix);
-
-                // Calculate a scaled modelViewMatrix for rendering a unit bounding box
-                VuMatrix44F scaleMatrix = vuMatrix44FScalingMatrix(modelTargetInfo.size);
-                VuMatrix44F translateMatrix = vuMatrix44FTranslationMatrix(modelTargetInfo.bbox.center);
-
-                scaledModelViewMatrix = vuMatrix44FMultiplyMatrix(translateMatrix, scaleMatrix);
-                scaledModelViewMatrix = vuMatrix44FMultiplyMatrix(modelViewMatrix, scaledModelViewMatrix);
-
-                result = true;
-            }
-        }
-    }
-
-    REQUIRE_SUCCESS(vuObservationListDestroy(observationList));
-
-    return result;
+    return false;
+    
+    // 20251102 Code below are not required for this project
+//    bool result = false;
+//
+//    if (mTarget != MODEL_TARGET_ID)
+//    {
+//        return false;
+//    }
+//
+//    VuObservationList* observationList = nullptr;
+//    REQUIRE_SUCCESS(vuObservationListCreate(&observationList));
+//
+//    if (vuStateGetModelTargetObservations(mVuforiaState, observationList) != VU_SUCCESS)
+//    {
+//        LOG("Error getting model target observations");
+//        REQUIRE_SUCCESS(vuObservationListDestroy(observationList));
+//        return false;
+//    }
+//
+//    int numObservations = 0;
+//    REQUIRE_SUCCESS(vuObservationListGetSize(observationList, &numObservations));
+//
+//    if (numObservations > 0)
+//    {
+//        VuObservation* observation = nullptr;
+//        if (vuObservationListGetElement(observationList, 0, &observation) == VU_SUCCESS)
+//        {
+//            assert(observation);
+//            assert(vuObservationIsType(observation, VU_OBSERVATION_MODEL_TARGET_TYPE) == VU_TRUE);
+//            assert(vuObservationHasPoseInfo(observation) == VU_TRUE);
+//
+//            VuPoseInfo poseInfo;
+//            REQUIRE_SUCCESS(vuObservationGetPoseInfo(observation, &poseInfo));
+//
+//            VuModelTargetObservationTargetInfo modelTargetInfo;
+//            REQUIRE_SUCCESS(vuModelTargetObservationGetTargetInfo(observation, &modelTargetInfo));
+//            if (poseInfo.poseStatus == VU_OBSERVATION_POSE_STATUS_NO_POSE)
+//            {
+//                VuGuideViewList* guideViewList;
+//                REQUIRE_SUCCESS(vuGuideViewListCreate(&guideViewList));
+//
+//                if (vuModelTargetObserverGetGuideViews(mObjectObserver, guideViewList) != VU_SUCCESS)
+//                {
+//                    LOG("Error getting list of guide views");
+//                }
+//                else
+//                {
+//                    int32_t size;
+//                    REQUIRE_SUCCESS(vuGuideViewListGetSize(guideViewList, &size));
+//                    mGuideViewModelTarget = [&]() -> VuGuideView* {
+//                        for (int i = 0; i < size; ++i)
+//                        {
+//                            VuGuideView* guideView = nullptr;
+//                            REQUIRE_SUCCESS(vuGuideViewListGetElement(guideViewList, i, &guideView));
+//                            const char* guideViewName = nullptr;
+//                            REQUIRE_SUCCESS(vuGuideViewGetName(guideView, &guideViewName));
+//
+//                            // Note: We use the activeGuideViewName as we know there is a guide view for our dataset.
+//                            //       When using Advanced Model Targets there may not be a guide view and
+//                            //       activeGuideViewName will be NULL.
+//                            if (strcmp(guideViewName, modelTargetInfo.activeGuideViewName) == 0)
+//                            {
+//                                return guideView;
+//                            }
+//                        }
+//                        return nullptr;
+//                    }();
+//                    if (!mGuideViewModelTarget)
+//                    {
+//                        LOG("Error getting guide view details");
+//                    }
+//                }
+//
+//                REQUIRE_SUCCESS(vuGuideViewListDestroy(guideViewList));
+//            }
+//            else
+//            {
+//                mGuideViewModelTarget = nullptr;
+//
+//                projectionMatrix = mCurrentRenderState.projectionMatrix;
+//
+//                // Compute model-view matrix
+//                auto modelMatrix = poseInfo.pose;
+//                modelViewMatrix = vuMatrix44FMultiplyMatrix(mCurrentRenderState.viewMatrix, modelMatrix);
+//
+//                // Calculate a scaled modelViewMatrix for rendering a unit bounding box
+//                VuMatrix44F scaleMatrix = vuMatrix44FScalingMatrix(modelTargetInfo.size);
+//                VuMatrix44F translateMatrix = vuMatrix44FTranslationMatrix(modelTargetInfo.bbox.center);
+//
+//                scaledModelViewMatrix = vuMatrix44FMultiplyMatrix(translateMatrix, scaleMatrix);
+//                scaledModelViewMatrix = vuMatrix44FMultiplyMatrix(modelViewMatrix, scaledModelViewMatrix);
+//
+//                result = true;
+//            }
+//        }
+//    }
+//
+//    REQUIRE_SUCCESS(vuObservationListDestroy(observationList));
+//
+//    return result;
 }
 
 
