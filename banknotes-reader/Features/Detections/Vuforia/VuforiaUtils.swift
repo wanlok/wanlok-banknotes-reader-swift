@@ -17,12 +17,21 @@ private let initDoneCallback: @convention(c) (UnsafeMutableRawPointer?) -> Void 
     }
 }
 
+private func convert(targetNames: [String], callback: (_ strings: [UnsafeMutablePointer<CChar>?], _ pointer: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?, _ count: Int32) -> Void) {
+    let strings = targetNames.map { strdup($0) }
+    strings.withUnsafeBufferPointer { buffer in
+        callback(strings, UnsafeMutablePointer(mutating: buffer.baseAddress), Int32(buffer.count))
+    }
+}
+
+private func finish(_ strings: [UnsafeMutablePointer<CChar>?]) {
+    for string in strings {
+        free(string)
+    }
+}
+
 func startVuforia(_ viewController: UIViewController) {
-    let names = ["hundred-dollars-note-b", "aud_50"]
-
-    let cNames = names.map { strdup($0) }
-
-    cNames.withUnsafeBufferPointer { buffer in
+    convert(targetNames: getXMLAttributeValues(fileName: "banknotesReader", elementName: "ImageTarget", attributeName: "name")) { strings, pointer, count in
         DispatchQueue.global(qos: .background).async {
             var initConfig = VuforiaInitConfig()
             initConfig.classPtr = UnsafeMutableRawPointer(Unmanaged.passUnretained(viewController).toOpaque())
@@ -30,13 +39,8 @@ func startVuforia(_ viewController: UIViewController) {
             initConfig.initDoneCallback = initDoneCallback
             initConfig.vbRenderBackend = VuRenderVBBackendType(VU_RENDER_VB_BACKEND_METAL)
             initConfig.interfaceOrientation = getOrientation()
-
-            let mutablePtr = UnsafeMutablePointer(mutating: buffer.baseAddress)
-            initAR(initConfig, mTarget, mutablePtr, Int32(buffer.count))
-
-            for ptr in cNames {
-                free(ptr)
-            }
+            initAR(initConfig, mTarget, pointer, count)
+            finish(strings);
         }
     }
 }
