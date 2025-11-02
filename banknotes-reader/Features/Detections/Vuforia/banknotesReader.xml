@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="aud_50" size="0.151000 0.064993" />
     <ImageTarget name="hundred-dollars-note-b" size="0.158000 0.065231" />
   </Tracking>
 </QCARConfig>

@@ -925,18 +925,29 @@ AppController::createObservers()
         LOG("Error creating device pose observer: 0x%02x", devicePoseCreationError);
         return false;
     }
+    
+    std::vector<const char*> targetNames = {
+        "hundred-dollars-note-b",
+        "aud_50",
+    };
 
-    auto imageTargetConfig = vuImageTargetConfigDefault();
-    imageTargetConfig.databasePath = "banknotesReader.xml";
-    imageTargetConfig.targetName = "hundred-dollars-note-b";
-    imageTargetConfig.activate = VU_TRUE;
-
-    VuImageTargetCreationError imageTargetCreationError;
-    if (vuEngineCreateImageTargetObserver(mEngine, &mObjectObserver, &imageTargetConfig, &imageTargetCreationError) != VU_SUCCESS)
+    for (const char* name : targetNames)
     {
-        LOG("Error creating image target observer: 0x%02x", imageTargetCreationError);
-        mErrorMessageCallback("Error creating image target observer");
-        return false;
+        auto config = vuImageTargetConfigDefault();
+        config.databasePath = "banknotesReader.xml";
+        config.targetName = name;
+        config.activate = VU_TRUE;
+
+        VuObserver* observer = nullptr;
+        VuImageTargetCreationError error;
+        if (vuEngineCreateImageTargetObserver(mEngine, &observer, &config, &error) == VU_SUCCESS)
+        {
+            mObjectObservers.push_back(observer);
+        }
+        else
+        {
+            LOG("Error creating image target observer for %s (0x%02x)", name, error);
+        }
     }
     
 //    if (mTarget == IMAGE_TARGET_ID)
@@ -978,11 +989,14 @@ AppController::createObservers()
 void
 AppController::destroyObservers()
 {
-    if (mObjectObserver != nullptr && vuObserverDestroy(mObjectObserver) != VU_SUCCESS)
+    for (auto observer : mObjectObservers)
     {
-        LOG("Error destroying object observer");
+        if (observer != nullptr && vuObserverDestroy(observer) != VU_SUCCESS)
+        {
+            LOG("Error destroying object observer");
+        }
     }
-    mObjectObserver = nullptr;
+    mObjectObservers.clear();
 
     if (mDevicePoseObserver != nullptr && vuObserverDestroy(mDevicePoseObserver) != VU_SUCCESS)
     {

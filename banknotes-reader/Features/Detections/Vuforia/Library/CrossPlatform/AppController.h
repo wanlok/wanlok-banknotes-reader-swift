@@ -198,7 +198,8 @@ private: // data members
     static constexpr int MAX_RELOCALIZING_SECONDS{ 15 };
 
     /// The observer for either the Image or Model target depending on which target was specified
-    VuObserver* mObjectObserver = nullptr;
+//    VuObserver* mObjectObserver = nullptr;
+    std::vector<VuObserver*> mObjectObservers;
 
     /// Between calls to prepareToRender and finishRender this holds a copy of the Vuforia state.
     VuState* mVuforiaState = nullptr;
