@@ -25,7 +25,7 @@ extern void* javaVM;
 namespace
 {
 // clang-format off
-constexpr char licenseKey[] = "";
+constexpr char licenseKey[] = "Ac92ycn/////AAABmSp7ivF0HkrBjEltn06MQ/BmTa4g4FYs8CTHhS1Q84v8GvTzo8aYUVtvDbuVNs8BofmUOYfiyqgtGu8B1BOhr+UWAKtshBRNVnP0txBWZbrc3FVo/zZazcWv+bVZstvIeiXBxpP4tYGs3OI61z4cK6BiY7tPU70LRclSX/3yL92OQcQlwCVNShm0pWU6SdV7W+c+JiuyJ4gk/eVau1t7oIvyuHuQHv5xsgQub51WZkFMba19PNZHp4Ko/ACwAiAeDTHa2TuwwkjJ9u6srjuw6VoXz17fQq7nKKqAxCC9qFo6lOr5wvljELFjt5W+JW05KYUahd+eJBB5GGoiR5h27AIEfV2ptd0k6KJ2G13BhAqG";
 // clang-format on
 
 constexpr float NEAR_PLANE = 0.01f;
@@ -47,7 +47,7 @@ constexpr float FAR_PLANE = 5.f;
  ===============================================================================*/
 
 void
-AppController::initAR(const InitConfig& initConfig, int target, char** targetNames, int count)
+AppController::initAR(const InitConfig& initConfig, int target, char* fileName, char** targetNames, int targetCount)
 {
     mVbRenderBackend = initConfig.vbRenderBackend;
     mErrorMessageCallback = initConfig.errorMessageCallback;
@@ -62,7 +62,7 @@ AppController::initAR(const InitConfig& initConfig, int target, char** targetNam
         return;
     }
 
-    if (!createObservers(targetNames, count))
+    if (!createObservers(fileName, targetNames, targetCount))
     {
         return;
     }
@@ -916,7 +916,7 @@ AppController::initErrorToString(VuErrorCode error)
 
 
 bool
-AppController::createObservers(char** targetNames, int count)
+AppController::createObservers(char* fileName, char** targetNames, int targetCount)
 {
     auto devicePoseConfig = vuDevicePoseConfigDefault();
     VuDevicePoseCreationError devicePoseCreationError;
@@ -926,12 +926,14 @@ AppController::createObservers(char** targetNames, int count)
         return false;
     }
 
-    for (int i = 0; i < count; ++i)
+    std::string databasePath = std::string(fileName) + ".xml";
+    
+    for (int i = 0; i < targetCount; ++i)
     {
-        const char* name = targetNames[i];
+        const char* targetName = targetNames[i];
         auto config = vuImageTargetConfigDefault();
-        config.databasePath = "banknotesReader.xml";
-        config.targetName = name;
+        config.databasePath = databasePath.c_str();
+        config.targetName = targetName;
         config.activate = VU_TRUE;
 
         VuObserver* observer = nullptr;
@@ -942,7 +944,7 @@ AppController::createObservers(char** targetNames, int count)
         }
         else
         {
-            LOG("Error creating image target observer for %s (0x%02x)", name, error);
+            LOG("Error creating image target observer for %s (0x%02x)", targetName, error);
         }
     }
     

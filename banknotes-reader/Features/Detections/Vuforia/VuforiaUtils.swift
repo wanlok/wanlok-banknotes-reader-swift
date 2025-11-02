@@ -17,21 +17,24 @@ private let initDoneCallback: @convention(c) (UnsafeMutableRawPointer?) -> Void 
     }
 }
 
-private func convert(targetNames: [String], callback: (_ strings: [UnsafeMutablePointer<CChar>?], _ pointer: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?, _ count: Int32) -> Void) {
-    let strings = targetNames.map { strdup($0) }
-    strings.withUnsafeBufferPointer { buffer in
-        callback(strings, UnsafeMutablePointer(mutating: buffer.baseAddress), Int32(buffer.count))
+private func convert(fileName: String, targetNames: [String], callback: (_ cFileName: UnsafeMutablePointer<CChar>?, _ cTargetNames: [UnsafeMutablePointer<CChar>?], _ pointer: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?, _ count: Int32) -> Void) {
+    let cFileName = strdup(fileName)
+    let cTargetNames = targetNames.map { strdup($0) }
+    cTargetNames.withUnsafeBufferPointer { buffer2 in
+        callback(cFileName, cTargetNames, UnsafeMutablePointer(mutating: buffer2.baseAddress), Int32(buffer2.count))
     }
 }
 
-private func finish(_ strings: [UnsafeMutablePointer<CChar>?]) {
-    for string in strings {
-        free(string)
+private func finish(_ cFileName: UnsafeMutablePointer<CChar>?, _ cTargetNames: [UnsafeMutablePointer<CChar>?]) {
+    free(cFileName)
+    for cTargetName in cTargetNames {
+        free(cTargetName)
     }
 }
 
 func startVuforia(_ viewController: UIViewController) {
-    convert(targetNames: getXMLAttributeValues(fileName: "banknotesReader", elementName: "ImageTarget", attributeName: "name")) { strings, pointer, count in
+    let fileName = "banknotesReader"
+    convert(fileName: fileName, targetNames: getXMLAttributeValues(fileName: fileName, elementName: "ImageTarget", attributeName: "name")) { cFileName, cTargetNames, pointer, count in
         DispatchQueue.global(qos: .background).async {
             var initConfig = VuforiaInitConfig()
             initConfig.classPtr = UnsafeMutableRawPointer(Unmanaged.passUnretained(viewController).toOpaque())
@@ -39,8 +42,8 @@ func startVuforia(_ viewController: UIViewController) {
             initConfig.initDoneCallback = initDoneCallback
             initConfig.vbRenderBackend = VuRenderVBBackendType(VU_RENDER_VB_BACKEND_METAL)
             initConfig.interfaceOrientation = getOrientation()
-            initAR(initConfig, mTarget, pointer, count)
-            finish(strings);
+            initAR(initConfig, mTarget, cFileName, pointer, count)
+            finish(cFileName, cTargetNames);
         }
     }
 }

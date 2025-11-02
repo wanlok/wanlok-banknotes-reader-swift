@@ -48,7 +48,7 @@ public:
     /// method initDoneCallback will be invoked.
     /// If initialization fails the error callback errorMessageCallback will be invoked.
     /// On Android the appData pointer should be a pointer to the Activity object.
-    void initAR(const InitConfig& initConfig, int target, char** targetNames, int count);
+    void initAR(const InitConfig& initConfig, int target, char* fileName, char** targetNames, int targetCount);
 
     /// Start the AR session
     /// Call this method when the app resumes from paused.
@@ -131,7 +131,7 @@ private: // methods
     void handleEngineError(VuEngineError errorCode);
 
     /// Create the set of Vuforia Observers needed in the application
-    bool createObservers(char** targetNames, int count);
+    bool createObservers(char* fileName, char** targetNames, int targetCount);
 
     /// Clean up Observers created by createObservers
     void destroyObservers();
