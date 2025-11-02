@@ -31,7 +31,11 @@ public:
     using ErrorMessageCallback = std::function<void(const char* errorString)>;
     using VuforiaEngineErrorCallback = std::function<void(VuErrorCode errorCode)>;
     using InitDoneCallback = std::function<void()>;
+    using DetectionCallback = std::function<void(const char* targetName)>;
 
+    /// 20251102 Added the following to get image target
+    DetectionCallback mDetectionCallback = nullptr;
+    
     /// Struct to group initialization parameters passed to initAR
     class InitConfig
     {
@@ -43,12 +47,11 @@ public:
         InitDoneCallback initDoneCallback{};
     };
 
-
     /// Initialize Vuforia. When the initialization is completed successfully the callback
     /// method initDoneCallback will be invoked.
     /// If initialization fails the error callback errorMessageCallback will be invoked.
     /// On Android the appData pointer should be a pointer to the Activity object.
-    void initAR(const InitConfig& initConfig, int target, char* fileName, char** targetNames, int targetCount);
+    void initAR(const InitConfig& initConfig, int target, DetectionCallback detectionCallback, char* fileName, char** targetNames, int targetCount);
 
     /// Start the AR session
     /// Call this method when the app resumes from paused.

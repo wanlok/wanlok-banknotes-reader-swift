@@ -47,7 +47,7 @@ getModelTargetId()
 
 
 void
-initAR(VuforiaInitConfig config, int target, char* fileName, char** targetNames, int targetCount)
+initAR(VuforiaInitConfig config, int target, DetectionCallback detectionCallback, char* fileName, char** targetNames, int targetCount)
 {
     // Hold onto pointers for later use by the lambda passed to initAR below
     gWrapperData.callbackClass = config.classPtr;
@@ -83,7 +83,7 @@ initAR(VuforiaInitConfig config, int target, char* fileName, char** targetNames,
     initConfig.initDoneCallback = []() { gWrapperData.initDoneCallbackMethod(gWrapperData.callbackClass); };
 
     // Call AppController to initialize Vuforia ...
-    controller.initAR(initConfig, target, fileName, targetNames, targetCount);
+    controller.initAR(initConfig, target, detectionCallback, fileName, targetNames, targetCount);
 }
 
 

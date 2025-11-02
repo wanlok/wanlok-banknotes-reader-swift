@@ -13,6 +13,7 @@ class DummyViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startVuforia(self)
+        let vuforiaWorker = VuforiaWorker(viewController: self)
+        vuforiaWorker.start()
     }
 }

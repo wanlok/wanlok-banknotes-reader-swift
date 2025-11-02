@@ -47,13 +47,14 @@ constexpr float FAR_PLANE = 5.f;
  ===============================================================================*/
 
 void
-AppController::initAR(const InitConfig& initConfig, int target, char* fileName, char** targetNames, int targetCount)
+AppController::initAR(const InitConfig& initConfig, int target, DetectionCallback detectionCallback, char* fileName, char** targetNames, int targetCount)
 {
     mVbRenderBackend = initConfig.vbRenderBackend;
     mErrorMessageCallback = initConfig.errorMessageCallback;
     mVuforeEngineErrorCallback = initConfig.vuforiaEngineErrorCallback;
     mInitDoneCallback = initConfig.initDoneCallback;
     mTarget = target;
+    mDetectionCallback = detectionCallback;
 
     mGuideViewModelTarget = nullptr;
     
@@ -381,11 +382,37 @@ AppController::getOrigin(VuMatrix44F& projectionMatrix, VuMatrix44F& modelViewMa
     return false;
 }
 
+bool isTargetInScreen(const VuMatrix44F& projectionMatrix, const VuMatrix44F& modelViewMatrix)
+{
+    VuVector4F ndc;
+    VuVector3F targetCenter = {0, 0, 0};
+    
+    VuMatrix44F mvp = vuMatrix44FMultiplyMatrix(projectionMatrix, modelViewMatrix);
+
+    ndc.data[0] = mvp.data[0]*targetCenter.data[0] + mvp.data[4]*targetCenter.data[1] +
+                  mvp.data[8]*targetCenter.data[2] + mvp.data[12];
+    ndc.data[1] = mvp.data[1]*targetCenter.data[0] + mvp.data[5]*targetCenter.data[1] +
+                  mvp.data[9]*targetCenter.data[2] + mvp.data[13];
+    ndc.data[2] = mvp.data[2]*targetCenter.data[0] + mvp.data[6]*targetCenter.data[1] +
+                  mvp.data[10]*targetCenter.data[2] + mvp.data[14];
+    ndc.data[3] = mvp.data[3]*targetCenter.data[0] + mvp.data[7]*targetCenter.data[1] +
+                  mvp.data[11]*targetCenter.data[2] + mvp.data[15];
+
+    ndc.data[0] /= ndc.data[3];
+    ndc.data[1] /= ndc.data[3];
+    ndc.data[2] /= ndc.data[3];
+
+    return (ndc.data[0] >= -1.0f && ndc.data[0] <= 1.0f &&
+            ndc.data[1] >= -1.0f && ndc.data[1] <= 1.0f &&
+            ndc.data[2] >= 0.0f  && ndc.data[2] <= 1.0f);
+}
 
 bool
 AppController::getImageTargetResult(VuMatrix44F& projectionMatrix, VuMatrix44F& modelViewMatrix, VuMatrix44F& scaledModelViewMatrix)
 {
     bool result = false;
+    
+    const char* targetName = nullptr;
 
     if (mTarget != IMAGE_TARGET_ID)
     {
@@ -438,13 +465,21 @@ AppController::getImageTargetResult(VuMatrix44F& projectionMatrix, VuMatrix44F& 
                 scale.data[2] = std::max(scale.data[0], scale.data[1]);
                 scaledModelViewMatrix = vuMatrix44FScale(scale, modelViewMatrix);
 
+                if (isTargetInScreen(projectionMatrix, modelViewMatrix))
+                {
+                    targetName = imageTargetInfo.name;
+                }
                 result = true;
             }
+            
         }
     }
+    
 
     REQUIRE_SUCCESS(vuObservationListDestroy(observationList));
-
+    
+    mDetectionCallback(targetName);
+    
     return result;
 }
 
