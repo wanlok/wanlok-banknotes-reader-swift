@@ -42,9 +42,9 @@ class VuforiaWorker {
     }
     
     func stop() {
+        vuforiaView.finish()
         stopAR()
         deinitAR()
-        vuforiaView.finish()
     }
     
     private func initDone(_ cFileName: UnsafeMutablePointer<CChar>?, _ cTargetNames: [UnsafeMutablePointer<CChar>?]) {
