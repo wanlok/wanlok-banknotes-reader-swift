@@ -41,17 +41,17 @@ class SettingsLandingViewController: SettingsViewController {
     
     func getDetectionMethods() -> String? {
         guard let sceneDelegate = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate else {
+            .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate, let viewController = sceneDelegate.getCameraViewController() else {
             return nil
         }
-        let viewController = sceneDelegate.getDetectionViewController()
-        return if viewController is ARSCNViewController {
-            "ARKit"
-        } else if viewController is VisionViewController {
-            "Vision"
-        } else {
-            "Dummy"
+        var title: String? = nil
+        for detectionMethod in detectionMethods {
+            if viewController.isKind(of: detectionMethod.type) {
+                title = detectionMethod.title
+                break
+            }
         }
+        return title
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

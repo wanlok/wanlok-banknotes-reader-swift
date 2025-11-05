@@ -10,27 +10,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var tabBarController: UITabBarController?
     
-    func getDetectionViewController() -> UIViewController? {
+    func getCameraViewController() -> UIViewController? {
         return tabBarController?.viewControllers?[0]
     }
 
     func changeCameraViewController(_ i: Int) {
-        var cameraViewController: UIViewController;
-        if i == 0 {
-            cameraViewController = ARSCNViewController()
-        } else if i == 1 {
-            cameraViewController = VisionViewController()
-        } else {
-            cameraViewController = DummyViewController()
-        }
+        let cameraViewController = detectionMethods[i].type.init()
         cameraViewController.tabBarItem = UITabBarItem(title: "Camera", image: UIImage(systemName: "camera"), tag: 0)
         var viewControllers = tabBarController?.viewControllers ?? []
         if viewControllers.count > 0 {
             viewControllers[0] = cameraViewController
         } else {
-            viewControllers = [
-                cameraViewController
-            ]
+            viewControllers = [cameraViewController]
         }
         tabBarController?.viewControllers = viewControllers
     }

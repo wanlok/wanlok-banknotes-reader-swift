@@ -12,12 +12,15 @@ class DetectionMethodsViewController: SettingsViewController {
         title: String,
         rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)]
     )] {
+        let rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)] = detectionMethods.map { detectionMethod in
+            (
+                title: detectionMethod.title,
+                subtitle: nil,
+                accessoryType: getDetectionMethodAccessoryType(detectionMethod.title)
+            )
+        }
         return [
-            (title: "Detection Methods", rows: [
-                (title: "ARKit", subtitle: nil, accessoryType: getDetectionMethodAccessoryType("ARKit")),
-                (title: "Vision", subtitle: nil, accessoryType: getDetectionMethodAccessoryType("Vision")),
-                (title: "Dummy", subtitle: nil, accessoryType: getDetectionMethodAccessoryType("Dummy")),
-            ])
+            (title: "Detection Methods", rows: rows)
         ]
     }
     
@@ -28,21 +31,19 @@ class DetectionMethodsViewController: SettingsViewController {
     
     func getDetectionMethodAccessoryType(_ title: String) -> UITableViewCell.AccessoryType? {
         guard let sceneDelegate = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate else {
+            .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate, let viewController = sceneDelegate.getCameraViewController() else {
             return nil
         }
-        let viewController = sceneDelegate.getDetectionViewController()
-        return if title == "ARKit" && viewController is ARSCNViewController {
-            .checkmark
-        } else if title == "Vision" && viewController is VisionViewController {
-            .checkmark
-        } else if title == "Dummy" && viewController is DummyViewController {
-            .checkmark
-        } else {
-            nil
+        var accessoryType: UITableViewCell.AccessoryType? = nil
+        for detectionMethod in detectionMethods {
+            if detectionMethod.title == title && viewController.isKind(of: detectionMethod.type) {
+                accessoryType = .checkmark
+                break
+            }
         }
+        return accessoryType
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let sceneDelegate = UIApplication.shared.connectedScenes
             .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate else {
