@@ -35,11 +35,8 @@ class ARSCNViewController: AmountDetectionViewController, ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor, let name = imageAnchor.referenceImage.name else { return }
         if imageAnchor.isTracked {
-            let slices = name.split(separator: "_")
-            if slices.count == 2 {
-                DispatchQueue.main.async {
-                    self.showAmountView(currency: "\(slices[0])", amount: "\(slices[1])")
-                }
+            DispatchQueue.main.async {
+                self.showAmountView(name)
             }
         } else {
             DispatchQueue.main.async {

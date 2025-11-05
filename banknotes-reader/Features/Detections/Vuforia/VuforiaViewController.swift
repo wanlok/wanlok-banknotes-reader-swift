@@ -7,7 +7,7 @@
 
 import UIKit
 
-class VuforiaViewController: UIViewController {
+class VuforiaViewController: AmountDetectionViewController {
     var vuforiaView: VuforiaView?
     var vuforiaWorker: VuforiaWorker?
     
@@ -27,7 +27,11 @@ class VuforiaViewController: UIViewController {
         ])
         
         vuforiaWorker = VuforiaWorker(vuforiaView: vuforiaView) { targetName in
-            print("TARGET: \(targetName)")
+            if let targetName = targetName {
+                self.showAmountView(targetName)
+            } else {
+                self.hideAmountView()
+            }
         }
         vuforiaWorker?.start()
     }

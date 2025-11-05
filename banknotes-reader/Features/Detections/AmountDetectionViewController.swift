@@ -17,9 +17,20 @@ class AmountDetectionViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    func showAmountView(currency: String, amount: String) {
-        guard amountView == nil else { return }
-
+    func showAmountView(_ name: String) {
+        guard amountView == nil else {
+            return
+        }
+        
+        let slices = name.split(separator: "_")
+        
+        guard slices.count == 2 else {
+            return
+        }
+        
+        let currency = "\(slices[0])"
+        let amount = "\(slices[1])"
+        
         let amountView = AmountView()
         amountView.translatesAutoresizingMaskIntoConstraints = false
         amountView.isAccessibilityElement = true
