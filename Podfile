@@ -6,5 +6,4 @@ target 'banknotes-reader' do
   use_frameworks!
 
   # Pods for banknotes-reader
-
 end
