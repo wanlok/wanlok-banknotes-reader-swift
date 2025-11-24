@@ -53,7 +53,6 @@ class SettingsLandingViewController: SettingsViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(indexPath.section) \(indexPath.row)")
         if indexPath.section == 0 && indexPath.row == 0 {
             navigationController?.pushViewController(DetectionMethodsViewController(), animated: true)
         } else if indexPath.section == 1 && indexPath.row == 0 {
