@@ -32,7 +32,7 @@ class APIViewController: UIViewController, WKNavigationDelegate {
             guard let result = result as? String else {
                 return
             }
-            if (result.count == 0 || result == "[]") && self.retryCount < self.retryCountThreshold {
+            if (result.count == 0 || result == "[]" || result == "{}") && self.retryCount < self.retryCountThreshold {
                 DispatchQueue.main.asyncAfter(deadline: .now() + self.retryInterval) {
                     self.retryCount = self.retryCount + 1
                     self.getResult(completion: completion)

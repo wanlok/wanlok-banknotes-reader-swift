@@ -41,8 +41,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		53AAB20A2EB4D92800AC4E69 /* Exceptions for "banknotes-reader" folder in "Embed Frameworks" build phase */ = {
+		53AAB20A2EB4D92800AC4E69 /* Exceptions for "banknotes-reader" folder in "Embed Frameworks" phase from "banknotes-reader" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			attributesByRelativePath = {
+				VuforiaEngine.framework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+			};
 			buildPhase = 53AAB2092EB4D92800AC4E69 /* Embed Frameworks */;
 			membershipExceptions = (
 				VuforiaEngine.framework,
@@ -55,7 +58,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				53ABF1882EB3690A009F58D0 /* Exceptions for "banknotes-reader" folder in "banknotes-reader" target */,
-				53AAB20A2EB4D92800AC4E69 /* Exceptions for "banknotes-reader" folder in "Embed Frameworks" build phase */,
+				53AAB20A2EB4D92800AC4E69 /* Exceptions for "banknotes-reader" folder in "Embed Frameworks" phase from "banknotes-reader" target */,
 			);
 			path = "banknotes-reader";
 			sourceTree = "<group>";
