@@ -17,26 +17,16 @@ struct Banknote: Codable {
 
 typealias BanknoteResponse = [String: Banknote]
 
-func getKeySet(_ context: NSManagedObjectContext) -> Set<String> {
-    var keySet = Set<String>()
-    let request: NSFetchRequest<BanknoteEntity> = BanknoteEntity.fetchRequest()
-    do {
-        let banknotes = try context.fetch(request)
-        print("COUNT", banknotes.count)
-        for banknote in banknotes {
-            if let key = banknote.key {
-                keySet.insert(key)
-            }
-        }
-    } catch {}
-    return keySet
-}
-
-func save(_ banknotesDict: [String: Banknote]) {
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let keySet = getKeySet(context)
-    for (key, banknote) in banknotesDict {
-        if !keySet.contains(key) {
+func save(_ banknotesDict: [String: Banknote], _ appDelegate: AppDelegate) {
+    let context = appDelegate.persistentContainer.newBackgroundContext()
+    context.perform {
+        let request = BanknoteEntity.fetchRequest()
+        let existing = (try? context.fetch(request)) ?? []
+        let existingKeys = Set(existing.compactMap { $0.key })
+        
+        print(existingKeys.count)
+        
+        for (key, banknote) in banknotesDict where !existingKeys.contains(key) {
             let entity = BanknoteEntity(context: context)
             entity.key = key
             entity.name = banknote.name
@@ -44,20 +34,55 @@ func save(_ banknotesDict: [String: Banknote]) {
             entity.width = banknote.width
             entity.height = banknote.height
         }
+        
+        do {
+            try context.save()
+        } catch {}
+        
+        let updatedEntities = (try? context.fetch(request)) ?? []
+        
+        let group = DispatchGroup()
+        
+        for entity in updatedEntities {
+            guard let urlString = entity.url,
+                  let url = URL(string: urlString),
+                  entity.imageData == nil else { continue }
+            
+            group.enter()
+            
+            URLSession.shared.dataTask(with: url) { data, _, _ in
+                context.perform {
+                    defer { group.leave() }
+
+                    guard let data = data else {
+                        return
+                    }
+
+                    entity.imageData = data
+                    do {
+                        try context.save()
+                    } catch {}
+                }
+            }.resume()
+        }
+        
+        group.notify(queue: .main) {
+            print("Download completed")
+        }
     }
-    do {
-        try context.save()
-    } catch {}
 }
 
 class SyncViewController: APIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
         get("https://wanlok.github.io/#/api/banknotes") { result in
             if let data = result.data(using: .utf8) {
                 do {
                     let banknotes = try JSONDecoder().decode([String: Banknote].self, from: data)
-                    save(banknotes)
+                    save(banknotes, appDelegate)
                 } catch {}
             }
         }
