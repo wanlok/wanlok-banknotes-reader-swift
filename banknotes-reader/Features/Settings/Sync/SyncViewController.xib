@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SyncViewController" customModule="banknotes_reader" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="m4w-Bn-hEF" id="u8S-k9-vWQ"/>
+                <outlet property="tableView" destination="uAj-xg-wiP" id="lkR-n6-GJP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,20 +21,24 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EM8-Nw-9Go">
-                    <rect key="frame" x="152.66666666666666" y="440.66666666666669" width="88" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="uAj-xg-wiP">
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                </tableView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="m4w-Bn-hEF">
+                    <rect key="frame" x="186.66666666666666" y="441" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="EM8-Nw-9Go" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="riQ-mg-tNO"/>
-                <constraint firstItem="EM8-Nw-9Go" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="xaM-85-5Ni"/>
+                <constraint firstItem="uAj-xg-wiP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3P1-mS-pfz"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uAj-xg-wiP" secondAttribute="trailing" id="Ekq-S6-UGR"/>
+                <constraint firstItem="m4w-Bn-hEF" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="FTO-aa-hlO"/>
+                <constraint firstItem="m4w-Bn-hEF" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="UO7-e4-kol"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="uAj-xg-wiP" secondAttribute="bottom" id="X4d-0I-yZB"/>
+                <constraint firstItem="uAj-xg-wiP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="cU4-rf-0uE"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="154"/>
+            <point key="canvasLocation" x="138.1679389312977" y="153.52112676056339"/>
         </view>
     </objects>
     <resources>
