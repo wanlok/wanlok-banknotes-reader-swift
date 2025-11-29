@@ -7,6 +7,7 @@
 
 import UIKit
 import ARKit
+import CoreData
 
 class ARSCNViewController: AmountDetectionViewController, ARSCNViewDelegate {
     
@@ -19,12 +20,25 @@ class ARSCNViewController: AmountDetectionViewController, ARSCNViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let configuration = ARWorldTrackingConfiguration()
-        if let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) {
-            configuration.detectionImages = referenceImages
+        
+        getBanknotes() { rows in
+            var detectionImages: Set<ARReferenceImage> = []
+
+            for (_, banknote, imageData) in rows {
+                guard let cgImage = UIImage(data: imageData)?.cgImage else {
+                    continue
+                }
+                let referenceImage = ARReferenceImage(cgImage, orientation: .up, physicalWidth: CGFloat(banknote.width))
+                referenceImage.name = banknote.name
+                detectionImages.insert(referenceImage)
+            }
+            
+            let configuration = ARWorldTrackingConfiguration()
+            configuration.detectionImages = detectionImages
             configuration.maximumNumberOfTrackedImages = 1
+
+            self.arscnView.session.run(configuration)
         }
-        arscnView.session.run(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
