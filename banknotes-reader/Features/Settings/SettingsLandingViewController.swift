@@ -14,10 +14,8 @@ class SettingsLandingViewController: SettingsViewController {
     )] {
         return [
             (title: "Settings", rows: [
-                (title: "Detection Methods", subtitle: getDetectionMethods(), accessoryType: .disclosureIndicator)
-            ]),
-            (title: "Dataset", rows: [
-                (title: "Sync", subtitle: nil, accessoryType: nil),
+                (title: "Detection Methods", subtitle: getDetectionMethods(), accessoryType: .disclosureIndicator),
+                (title: "Dataset", subtitle: nil, accessoryType: nil),
 //                (title: "B", subtitle: nil, accessoryType: nil)
             ]),
 //            (title: "About", rows:  [
@@ -55,8 +53,8 @@ class SettingsLandingViewController: SettingsViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             navigationController?.pushViewController(DetectionMethodsViewController(), animated: true)
-        } else if indexPath.section == 1 && indexPath.row == 0 {
-            navigationController?.pushViewController(SyncViewController(), animated: true)
+        } else if indexPath.section == 0 && indexPath.row == 1 {
+            navigationController?.pushViewController(DatasetViewController(), animated: true)
         }
     }
 }
