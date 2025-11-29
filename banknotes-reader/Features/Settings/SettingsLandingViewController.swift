@@ -12,12 +12,15 @@ class SettingsLandingViewController: SettingsViewController {
         title: String,
         rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)]
     )] {
+        let detectionMethod = getDetectionMethod()
+        var rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)] = [
+            (title: "Detection Methods", subtitle: detectionMethod, accessoryType: .disclosureIndicator),
+        ]
+        if detectionMethod != "Dummy" {
+            rows.append((title: "Dataset", subtitle: nil, accessoryType: .disclosureIndicator))
+        }
         return [
-            (title: "Settings", rows: [
-                (title: "Detection Methods", subtitle: getDetectionMethods(), accessoryType: .disclosureIndicator),
-                (title: "Dataset", subtitle: nil, accessoryType: nil),
-//                (title: "B", subtitle: nil, accessoryType: nil)
-            ]),
+            (title: "Settings", rows: rows),
 //            (title: "About", rows:  [
 //                (title: "A", subtitle: nil, accessoryType: nil),
 //                (title: "B", subtitle: nil, accessoryType: nil)
@@ -35,7 +38,7 @@ class SettingsLandingViewController: SettingsViewController {
         tableView.reloadData()
     }
     
-    func getDetectionMethods() -> String? {
+    func getDetectionMethod() -> String? {
         guard let sceneDelegate = UIApplication.shared.connectedScenes
             .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate, let viewController = sceneDelegate.getCameraViewController() else {
             return nil
@@ -54,7 +57,11 @@ class SettingsLandingViewController: SettingsViewController {
         if indexPath.section == 0 && indexPath.row == 0 {
             navigationController?.pushViewController(DetectionMethodsViewController(), animated: true)
         } else if indexPath.section == 0 && indexPath.row == 1 {
-            navigationController?.pushViewController(DatasetViewController(), animated: true)
+            if getDetectionMethod() == "Vuforia" {
+                navigationController?.pushViewController(VuforiaDatasetViewController(), animated: true)
+            } else {
+                navigationController?.pushViewController(DatasetViewController(), animated: true)
+            }
         }
     }
 }
