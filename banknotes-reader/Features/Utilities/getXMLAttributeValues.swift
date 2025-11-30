@@ -24,8 +24,8 @@ private class XMLAttributeValueParserDelegate: NSObject, XMLParserDelegate {
     }
 }
 
-func getXMLAttributeValues(filePath: String, elementName: String, attributeName: String) -> [String] {
-    guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) else {
+func getXMLAttributeValues(filePath: URL, elementName: String, attributeName: String) -> [String] {
+    guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath.path)) else {
         return []
     }
     let parser = XMLParser(data: data)

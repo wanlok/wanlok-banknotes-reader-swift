@@ -19,57 +19,45 @@ class VuforiaDatasetViewController: UIViewController {
             action: #selector(onSyncButtonClicked)
         )
         
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        let xmlFile = documents.appendingPathComponent("banknotesReader.xml")
-        let datFile = documents.appendingPathComponent("banknotesReader.dat")
-        
-        if FileManager.default.fileExists(atPath: xmlFile.path),
-           FileManager.default.fileExists(atPath: datFile.path) {
-            
-        } else {
-            
-        }
+        reload()
     }
     
     @objc private func onSyncButtonClicked() {
-        print("onSyncButtonClicked")
-        downloadVuforiaDatabase() { savedXML, savedDAT in
-            print(savedXML, savedDAT)
+        downloadVuforiaDatabase() {
+            self.reload()
         }
     }
     
-    func downloadVuforiaDatabase(completion: @escaping (URL?, URL?) -> Void) {
-        let xmlURL = URL(string: "https://wanlok.github.io/banknotesReader.xml")!
-        let datURL = URL(string: "https://wanlok.github.io/banknotesReader.dat")!
-        
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        let xmlFile = documents.appendingPathComponent("banknotesReader.xml")
-        let datFile = documents.appendingPathComponent("banknotesReader.dat")
-        
+    func downloadVuforiaDatabase(completion: @escaping () -> Void) {
         let group = DispatchGroup()
-        
-        var savedXML: URL? = nil
-        var savedDAT: URL? = nil
-        
-        func download(_ from: URL, to: URL, assign: @escaping (URL)->Void) {
+                
+        func download(_ url: URL?, to: URL) {
+            guard let url = url else {
+                return
+            }
             group.enter()
-            URLSession.shared.downloadTask(with: from) { tmp, _, _ in
-                if let tmp = tmp {
+            URLSession.shared.downloadTask(with: url) { filePath, _, _ in
+                if let filePath = filePath {
                     try? FileManager.default.removeItem(at: to)
-                    try? FileManager.default.moveItem(at: tmp, to: to)
-                    assign(to)
+                    try? FileManager.default.moveItem(at: filePath, to: to)
                 }
                 group.leave()
             }.resume()
         }
         
-        download(xmlURL, to: xmlFile) { savedXML = $0 }
-        download(datURL, to: datFile) { savedDAT = $0 }
+        let (xmlFilePath, datFilePath) = getVuforiaDatasetFilePaths()
+        
+        download(URL(string: "https://wanlok.github.io/\(vuforiaDatasetFileName).xml"), to: xmlFilePath)
+        download(URL(string: "https://wanlok.github.io/\(vuforiaDatasetFileName).dat"), to: datFilePath)
         
         group.notify(queue: .main) {
-            completion(savedXML, savedDAT)
+            completion()
         }
+    }
+    
+    func reload() {
+        let (filePath, _) = getVuforiaDatasetFilePaths()
+        let targetNames = getXMLAttributeValues(filePath: filePath, elementName: "ImageTarget", attributeName: "name")
+        print(targetNames)
     }
 }
