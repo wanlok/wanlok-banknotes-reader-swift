@@ -1,5 +1,5 @@
 //
-//  APIViewController.swift
+//  NetworkViewController.swift
 //  banknotes-reader
 //
 //  Created by Robert Wan on 24/11/2025.
@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class APIViewController: UIViewController, WKNavigationDelegate {
+class NetworkViewController: UIViewController, WKNavigationDelegate {
     var webView = WKWebView(frame: .zero)
     var getCompletion: ((String) -> Void)?
     var retryCount = 0
@@ -50,5 +50,31 @@ class APIViewController: UIViewController, WKNavigationDelegate {
         getCompletion = completion
         retryCount = 0
         webView.load(URLRequest(url: url))
+    }
+    
+    func downloadFiles(_ rows: [(url: String, filePath: URL)], _ completion: @escaping () -> Void) {
+        let group = DispatchGroup()
+                
+        func download(url: String, toFilePath: URL) {
+            guard let url = URL(string: url) else {
+                return
+            }
+            group.enter()
+            URLSession.shared.downloadTask(with: url) { filePath, _, _ in
+                if let filePath = filePath {
+                    try? FileManager.default.removeItem(at: toFilePath)
+                    try? FileManager.default.moveItem(at: filePath, to: toFilePath)
+                }
+                group.leave()
+            }.resume()
+        }
+        
+        for (url, filePath) in rows {
+            download(url: url, toFilePath: filePath)
+        }
+        
+        group.notify(queue: .main) {
+            completion()
+        }
     }
 }

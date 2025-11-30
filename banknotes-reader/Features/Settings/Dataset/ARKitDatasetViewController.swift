@@ -17,7 +17,7 @@ struct Banknote: Codable {
 
 typealias BanknoteResponse = [String: Banknote]
 
-class ARKitDatasetViewController: APIViewController, UITableViewDataSource, UITableViewDelegate {
+class ARKitDatasetViewController: NetworkViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     

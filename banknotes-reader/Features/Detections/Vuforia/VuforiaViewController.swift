@@ -16,6 +16,7 @@ class VuforiaViewController: AmountDetectionViewController {
         
         let vuforiaView = VuforiaView()
         vuforiaView.translatesAutoresizingMaskIntoConstraints = false
+        vuforiaView.backgroundColor = .black
         self.vuforiaView = vuforiaView
         view.addSubview(vuforiaView)
 
