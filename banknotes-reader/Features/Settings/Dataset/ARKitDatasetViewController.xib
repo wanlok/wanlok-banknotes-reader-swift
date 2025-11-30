@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DatasetViewController" customModule="banknotes_reader" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ARKitDatasetViewController" customModule="banknotes_reader" customModuleProvider="target">
             <connections>
-                <outlet property="activityIndicator" destination="6hC-RR-sKI" id="xak-1i-U5e"/>
-                <outlet property="tableView" destination="IhN-u9-AIv" id="1op-tL-UII"/>
+                <outlet property="activityIndicator" destination="eEQ-hM-zD5" id="1cY-ka-beq"/>
+                <outlet property="tableView" destination="md9-pp-tkm" id="feU-xl-opS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,23 +21,23 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IhN-u9-AIv">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="md9-pp-tkm">
                     <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6hC-RR-sKI">
-                    <rect key="frame" x="187" y="441" width="20" height="20"/>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="eEQ-hM-zD5">
+                    <rect key="frame" x="186" y="441" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="IhN-u9-AIv" secondAttribute="bottom" id="47R-3i-Soz"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="IhN-u9-AIv" secondAttribute="trailing" id="KDd-ey-75K"/>
-                <constraint firstItem="IhN-u9-AIv" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fuB-N3-U7l"/>
-                <constraint firstItem="IhN-u9-AIv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="pLi-Ho-lry"/>
-                <constraint firstItem="6hC-RR-sKI" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="roq-rd-weS"/>
-                <constraint firstItem="6hC-RR-sKI" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="zq0-Pg-bE0"/>
+                <constraint firstItem="md9-pp-tkm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ILu-Le-mMW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="md9-pp-tkm" secondAttribute="bottom" id="NZm-lu-47O"/>
+                <constraint firstItem="eEQ-hM-zD5" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="cPS-ed-dcf"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="md9-pp-tkm" secondAttribute="trailing" id="iOD-eB-fi3"/>
+                <constraint firstItem="md9-pp-tkm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="l6Z-Mq-0zZ"/>
+                <constraint firstItem="eEQ-hM-zD5" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="p4j-mW-ADy"/>
             </constraints>
             <point key="canvasLocation" x="140" y="154"/>
         </view>

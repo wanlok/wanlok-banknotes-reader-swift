@@ -60,7 +60,7 @@ class SettingsLandingViewController: SettingsViewController {
             if getDetectionMethod() == "Vuforia" {
                 navigationController?.pushViewController(VuforiaDatasetViewController(), animated: true)
             } else {
-                navigationController?.pushViewController(DatasetViewController(), animated: true)
+                navigationController?.pushViewController(ARKitDatasetViewController(), animated: true)
             }
         }
     }

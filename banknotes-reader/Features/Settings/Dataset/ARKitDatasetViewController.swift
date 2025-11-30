@@ -1,8 +1,8 @@
 //
-//  DatasetViewController.swift
+//  ARKitDatasetViewController.swift
 //  banknotes-reader
 //
-//  Created by Robert Wan on 29/11/2025.
+//  Created by Robert Wan on 30/11/2025.
 //
 
 import UIKit
@@ -17,7 +17,7 @@ struct Banknote: Codable {
 
 typealias BanknoteResponse = [String: Banknote]
 
-class DatasetViewController: APIViewController, UITableViewDataSource, UITableViewDelegate {
+class ARKitDatasetViewController: APIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
