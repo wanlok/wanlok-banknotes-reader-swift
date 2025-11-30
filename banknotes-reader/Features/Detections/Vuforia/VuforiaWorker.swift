@@ -23,8 +23,11 @@ class VuforiaWorker {
     }
 
     func start() {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileName = "banknotesReader"
-        convert(fileName: fileName, targetNames: getXMLAttributeValues(fileName: fileName, elementName: "ImageTarget", attributeName: "name")) { cFileName, cTargetNames, pointer, count in
+        let filePath = documents.appendingPathComponent("\(fileName).xml").path
+        let targetNames = getXMLAttributeValues(filePath: filePath, elementName: "ImageTarget", attributeName: "name")
+        convert(fileName: fileName, targetNames: targetNames) { cFileName, cTargetNames, pointer, count in
             DispatchQueue.global(qos: .background).async {
                 var config = VuforiaInitConfig()
                 config.classPtr = UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque())
@@ -36,7 +39,7 @@ class VuforiaWorker {
                 
                 initAR(config, 0, cFileName, pointer, count)
                 
-                self.initDone(cFileName, cTargetNames);
+                self.initDone(cFileName, cTargetNames)
             }
         }
     }

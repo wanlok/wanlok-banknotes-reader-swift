@@ -5,14 +5,6 @@
 //  Created by Robert Wan on 2/11/2025.
 //
 
-private func loadXMLData(fileName: String) -> Data? {
-    guard let path = Bundle.main.path(forResource: fileName, ofType: "xml") else {
-        return nil
-    }
-    let url = URL(fileURLWithPath: path)
-    return try? Data(contentsOf: url)
-}
-
 private class XMLAttributeValueParserDelegate: NSObject, XMLParserDelegate {
     var values: [String] = []
     
@@ -32,8 +24,8 @@ private class XMLAttributeValueParserDelegate: NSObject, XMLParserDelegate {
     }
 }
 
-func getXMLAttributeValues(fileName: String, elementName: String, attributeName: String) -> [String] {
-    guard let data = loadXMLData(fileName: fileName) else {
+func getXMLAttributeValues(filePath: String, elementName: String, attributeName: String) -> [String] {
+    guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) else {
         return []
     }
     let parser = XMLParser(data: data)
