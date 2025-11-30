@@ -1,15 +1,15 @@
 //
-//  ARSCNViewController.swift
+//  ARKitViewController.swift
 //  banknotes-reader
 //
-//  Created by Robert Wan on 26/10/2025.
+//  Created by Robert Wan on 30/11/2025.
 //
 
 import UIKit
 import ARKit
 import CoreData
 
-class ARSCNViewController: AmountDetectionViewController, ARSCNViewDelegate {
+class ARKitViewController: AmountDetectionViewController, ARSCNViewDelegate {
     
     @IBOutlet weak var arscnView: ARSCNView!
 

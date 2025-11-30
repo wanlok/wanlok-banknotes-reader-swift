@@ -11,7 +11,7 @@ struct DetectionMethod {
 }
 
 let detectionMethods: [DetectionMethod] = [
-    DetectionMethod(title: "ARKit", type: ARSCNViewController.self),
+    DetectionMethod(title: "ARKit", type: ARKitViewController.self),
 //    DetectionMethod(title: "Vision", type: VisionViewController.self),
     DetectionMethod(title: "Vuforia", type: VuforiaViewController.self),
     DetectionMethod(title: "Dummy", type: DummyViewController.self)
