@@ -24,10 +24,11 @@ class ARKitViewController: AmountDetectionViewController, ARSCNViewDelegate {
         getBanknotes() { rows in
             var detectionImages: Set<ARReferenceImage> = []
 
-            for (_, banknote, imageData) in rows {
-                guard let cgImage = UIImage(data: imageData)?.cgImage else {
+            for row in rows {
+                guard let data = row.imageData, let cgImage = UIImage(data: data)?.cgImage else {
                     continue
                 }
+                let banknote = row.banknote
                 let referenceImage = ARReferenceImage(cgImage, orientation: .up, physicalWidth: CGFloat(banknote.width))
                 referenceImage.name = banknote.name
                 detectionImages.insert(referenceImage)

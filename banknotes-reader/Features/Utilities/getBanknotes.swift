@@ -7,7 +7,7 @@
 
 import CoreData
 
-func getBanknotes(_ callback: @escaping ([(key: String, banknote: Banknote, imageData: Data)]) -> Void) {
+func getBanknotes(_ callback: @escaping ([DatasetRow]) -> Void) {
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
         callback([])
         return
@@ -16,14 +16,14 @@ func getBanknotes(_ callback: @escaping ([(key: String, banknote: Banknote, imag
     context.perform {
         let request = BanknoteEntity.fetchRequest()
         let entities = (try? context.fetch(request)) ?? []
-        let rows: [(key: String, banknote: Banknote, imageData: Data)] = entities.compactMap { entity in
-            guard let key = entity.key, let name = entity.name, let url = entity.url, let imageData = entity.imageData else {
+        let rows: [DatasetRow] = entities.compactMap { entity in
+            guard let name = entity.name else {
                 return nil
             }
-            return (
-                key: key,
-                banknote: Banknote(name: name, url: url, width: entity.width, height: entity.height),
-                imageData: imageData
+            return DatasetRow(
+                key: entity.key,
+                banknote: Banknote(name: name, url: entity.url, width: entity.width, height: entity.height),
+                imageData: entity.imageData
             )
         }
         callback(rows)

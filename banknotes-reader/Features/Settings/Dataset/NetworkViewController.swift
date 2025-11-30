@@ -52,25 +52,25 @@ class NetworkViewController: UIViewController, WKNavigationDelegate {
         webView.load(URLRequest(url: url))
     }
     
-    func downloadFiles(_ rows: [(url: String, filePath: URL)], _ completion: @escaping () -> Void) {
+    func downloadFiles(_ files: [(url: String, filePath: URL)], _ completion: @escaping () -> Void) {
         let group = DispatchGroup()
                 
-        func download(url: String, toFilePath: URL) {
+        func download(url: String, to: URL) {
             guard let url = URL(string: url) else {
                 return
             }
             group.enter()
-            URLSession.shared.downloadTask(with: url) { filePath, _, _ in
-                if let filePath = filePath {
-                    try? FileManager.default.removeItem(at: toFilePath)
-                    try? FileManager.default.moveItem(at: filePath, to: toFilePath)
+            URLSession.shared.downloadTask(with: url) { at, _, _ in
+                if let at = at {
+                    try? FileManager.default.removeItem(at: at)
+                    try? FileManager.default.moveItem(at: at, to: to)
                 }
                 group.leave()
             }.resume()
         }
         
-        for (url, filePath) in rows {
-            download(url: url, toFilePath: filePath)
+        for (url, filePath) in files {
+            download(url: url, to: filePath)
         }
         
         group.notify(queue: .main) {

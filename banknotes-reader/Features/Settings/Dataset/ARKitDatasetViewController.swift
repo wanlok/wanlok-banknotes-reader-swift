@@ -8,24 +8,10 @@
 import UIKit
 import CoreData
 
-struct Banknote: Codable {
-    let name: String
-    let url: String
-    let width: Double
-    let height: Double
-}
-
 typealias BanknoteResponse = [String: Banknote]
 
-class ARKitDatasetViewController: NetworkViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    let identifier: String = "DatasetViewController"
-    
-    var sections: [(title: String, rows: [(key: String, banknote: Banknote, imageData: Data)])] = []
-    
-    func save(_ banknotes: [String: Banknote], _ callback: @escaping ([(key: String, banknote: Banknote, imageData: Data)]) -> Void) {
+class ARKitDatasetViewController: DatasetViewController {
+    func save(_ banknotes: [String: Banknote], _ callback: @escaping ([DatasetRow]) -> Void) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             getBanknotes(callback)
             return
@@ -94,10 +80,10 @@ class ARKitDatasetViewController: NetworkViewController, UITableViewDataSource, 
         }
     }
     
-    @objc private func onSyncButtonClicked() {
+    @objc override func onSyncButtonClicked() {
         activityIndicator.isHidden = false
         tableView.isHidden = true
-        
+
         get("https://wanlok.github.io/#/api/banknotes") { result in
             if let data = result.data(using: .utf8) {
                 do {
@@ -117,20 +103,7 @@ class ARKitDatasetViewController: NetworkViewController, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Dataset"
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Sync",
-            style: .plain,
-            target: self,
-            action: #selector(onSyncButtonClicked)
-        )
-        
-        activityIndicator.startAnimating()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "DatasetTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-        
+
         activityIndicator.isHidden = false
         tableView.isHidden = true
         
@@ -142,14 +115,6 @@ class ARKitDatasetViewController: NetworkViewController, UITableViewDataSource, 
                 self.tableView.isHidden = false
             }
         }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].rows.count
     }
     
     func tableView(_ tableView: UITableView,
@@ -164,17 +129,5 @@ class ARKitDatasetViewController: NetworkViewController, UITableViewDataSource, 
             tableView.endUpdates()
             completion(true)
         }])
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? DatasetTableViewCell else {
-            fatalError("tableView cellForRowAt")
-        }
-        let (_, banknote, imageData) = sections[indexPath.section].rows[indexPath.row]
-        cell.previewImageView.image = UIImage(data: imageData)
-        cell.nameLabel.text = banknote.name
-        cell.widthLabel.text = "\(banknote.width)"
-        cell.heightLabel.text = "\(banknote.height)"
-        return cell
     }
 }
