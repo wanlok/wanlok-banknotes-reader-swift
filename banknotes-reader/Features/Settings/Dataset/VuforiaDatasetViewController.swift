@@ -57,7 +57,7 @@ class VuforiaDatasetViewController: UIViewController {
     
     func reload() {
         let (filePath, _) = getVuforiaDatasetFilePaths()
-        let targetNames = getXMLAttributeValues(filePath: filePath, elementName: "ImageTarget", attributeName: "name")
-        print(targetNames)
+        let values = getXMLAttributeValues(filePath: filePath, elementName: "ImageTarget", attributeNames: ["name", "size"])
+        print(values)
     }
 }

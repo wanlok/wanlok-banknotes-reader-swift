@@ -24,7 +24,10 @@ class VuforiaWorker {
 
     func start() {
         let (filePath, _) = getVuforiaDatasetFilePaths()
-        let targetNames = getXMLAttributeValues(filePath: filePath, elementName: "ImageTarget", attributeName: "name")
+        let values = getXMLAttributeValues(filePath: filePath, elementName: "ImageTarget", attributeNames: ["name"])
+        guard let targetNames = values["name"] else {
+            return
+        }
         convert(fileName: vuforiaDatasetFileName, targetNames: targetNames) { cFileName, cTargetNames, pointer, count in
             DispatchQueue.global(qos: .background).async {
                 var config = VuforiaInitConfig()
