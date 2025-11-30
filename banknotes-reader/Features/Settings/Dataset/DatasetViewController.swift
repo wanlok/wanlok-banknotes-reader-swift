@@ -23,11 +23,8 @@ class DatasetViewController: APIViewController, UITableViewDataSource, UITableVi
     
     let identifier: String = "DatasetViewController"
     
-    var sections: [(
-        title: String,
-        rows: [(key: String, banknote: Banknote, imageData: Data)]
-    )] = []
-
+    var sections: [(title: String, rows: [(key: String, banknote: Banknote, imageData: Data)])] = []
+    
     func save(_ banknotes: [String: Banknote], _ callback: @escaping ([(key: String, banknote: Banknote, imageData: Data)]) -> Void) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             getBanknotes(callback)
@@ -83,7 +80,7 @@ class DatasetViewController: APIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
-
+    
     func delete(_ key: String) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return

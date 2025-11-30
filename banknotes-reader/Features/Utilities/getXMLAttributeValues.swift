@@ -25,8 +25,7 @@ private class XMLAttributeValuesParserDelegate: NSObject, XMLParserDelegate {
         values = createEmptyValues(attributeNames)
     }
     
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?,
-                qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         guard elementName == self.elementName else {
             return
         }
