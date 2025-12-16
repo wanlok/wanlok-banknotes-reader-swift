@@ -65,6 +65,8 @@ class SettingsLandingViewController: SettingViewController {
             } else {
                 navigationController?.pushViewController(ARKitDatasetViewController(), animated: true)
             }
+        } else if indexPath.section == 1 && indexPath.row == 0 {
+            navigationController?.pushViewController(LanguageViewController(), animated: true)
         }
     }
 }
