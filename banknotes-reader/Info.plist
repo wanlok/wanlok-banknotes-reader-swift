@@ -19,7 +19,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>This app uses the camera to scan banknotes.</string>
 </dict>
 </plist>

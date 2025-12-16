@@ -7,24 +7,20 @@
 
 import UIKit
 
+typealias Row = (
+    title: String,
+    subtitle: String?,
+    accessoryType: UITableViewCell.AccessoryType?
+)
+
 class SettingsLandingViewController: SettingsViewController {
     override var sections: [(
         title: String,
-        rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)]
+        rows: [Row]
     )] {
-        let detectionMethod = getDetectionMethod()
-        var rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)] = [
-            (title: "Detection Methods", subtitle: detectionMethod, accessoryType: .disclosureIndicator),
-        ]
-        if detectionMethod != "Dummy" {
-            rows.append((title: "Dataset", subtitle: nil, accessoryType: .disclosureIndicator))
-        }
         return [
-            (title: "Settings", rows: rows),
-//            (title: "About", rows:  [
-//                (title: "A", subtitle: nil, accessoryType: nil),
-//                (title: "B", subtitle: nil, accessoryType: nil)
-//            ])
+            (title: "Settings", rows: getSettingRows()),
+            (title: "Languages", rows: getLanguageRows())
         ]
     }
     
@@ -51,6 +47,22 @@ class SettingsLandingViewController: SettingsViewController {
             }
         }
         return title
+    }
+    
+    func getSettingRows() -> [Row] {
+        var rows: [Row] = []
+        let detectionMethod = getDetectionMethod()
+        rows.append((title: "Detection Methods", subtitle: detectionMethod, accessoryType: .disclosureIndicator))
+        if detectionMethod != "Dummy" {
+            rows.append((title: "Dataset", subtitle: nil, accessoryType: .disclosureIndicator))
+        }
+        return rows
+    }
+    
+    func getLanguageRows() -> [Row] {
+        var rows: [Row] = []
+        rows.append((title: "Languages", subtitle: "English", accessoryType: .disclosureIndicator))
+        return rows
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
