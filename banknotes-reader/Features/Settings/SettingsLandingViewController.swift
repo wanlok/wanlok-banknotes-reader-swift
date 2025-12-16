@@ -7,17 +7,8 @@
 
 import UIKit
 
-typealias Row = (
-    title: String,
-    subtitle: String?,
-    accessoryType: UITableViewCell.AccessoryType?
-)
-
-class SettingsLandingViewController: SettingsViewController {
-    override var sections: [(
-        title: String,
-        rows: [Row]
-    )] {
+class SettingsLandingViewController: SettingViewController {
+    override var sections: [(title: String, rows: [SettingRow])] {
         return [
             (title: "Settings", rows: getSettingRows()),
             (title: "Languages", rows: getLanguageRows())
@@ -49,8 +40,8 @@ class SettingsLandingViewController: SettingsViewController {
         return title
     }
     
-    func getSettingRows() -> [Row] {
-        var rows: [Row] = []
+    func getSettingRows() -> [SettingRow] {
+        var rows: [SettingRow] = []
         let detectionMethod = getDetectionMethod()
         rows.append((title: "Detection Methods", subtitle: detectionMethod, accessoryType: .disclosureIndicator))
         if detectionMethod != "Dummy" {
@@ -59,8 +50,8 @@ class SettingsLandingViewController: SettingsViewController {
         return rows
     }
     
-    func getLanguageRows() -> [Row] {
-        var rows: [Row] = []
+    func getLanguageRows() -> [SettingRow] {
+        var rows: [SettingRow] = []
         rows.append((title: "Languages", subtitle: "English", accessoryType: .disclosureIndicator))
         return rows
     }

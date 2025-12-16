@@ -37,9 +37,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         changeCameraViewController(0)
         
-        let settingsViewController = SettingsLandingViewController()
-        settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)
-        tabBarController?.viewControllers?.append(UINavigationController(rootViewController: settingsViewController))
+        let settingViewController = SettingsLandingViewController()
+        settingViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)
+        tabBarController?.viewControllers?.append(UINavigationController(rootViewController: settingViewController))
         
         // Set up window
         let window = UIWindow(windowScene: windowScene)

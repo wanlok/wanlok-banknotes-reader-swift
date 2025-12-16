@@ -7,12 +7,9 @@
 
 import UIKit
 
-class DetectionMethodsViewController: SettingsViewController {
-    override var sections:  [(
-        title: String,
-        rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)]
-    )] {
-        let rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)] = detectionMethods.map { detectionMethod in
+class DetectionMethodsViewController: SettingViewController {
+    override var sections: [(title: String, rows: [SettingRow])] {
+        let rows: [SettingRow] = detectionMethods.map { detectionMethod in
             (
                 title: detectionMethod.title,
                 subtitle: nil,
@@ -43,7 +40,7 @@ class DetectionMethodsViewController: SettingsViewController {
         }
         return accessoryType
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let sceneDelegate = UIApplication.shared.connectedScenes
             .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate else {

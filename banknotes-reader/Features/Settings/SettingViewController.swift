@@ -1,5 +1,5 @@
 //
-//  SettingsViewController.swift
+//  SettingViewController.swift
 //  banknotes-reader
 //
 //  Created by Robert Wan on 26/10/2025.
@@ -7,14 +7,17 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+typealias SettingRow = (
+    title: String,
+    subtitle: String?,
+    accessoryType: UITableViewCell.AccessoryType?
+)
+
+class SettingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let identifier: String = "SettingsViewController"
+    let identifier: String = "SettingViewController"
     
-    var sections:  [(
-        title: String,
-        rows: [(title: String, subtitle: String?, accessoryType: UITableViewCell.AccessoryType?)]
-    )] {
+    var sections:  [(title: String, rows: [SettingRow])] {
         fatalError("Subclasses must override `sections`")
     }
     
