@@ -54,7 +54,7 @@ class NetworkViewController: UIViewController, WKNavigationDelegate {
     
     func downloadFiles(_ files: [(url: String, filePath: URL)], _ completion: @escaping () -> Void) {
         let group = DispatchGroup()
-                
+        
         func download(url: String, to: URL) {
             guard let url = URL(string: url) else {
                 return
@@ -62,8 +62,11 @@ class NetworkViewController: UIViewController, WKNavigationDelegate {
             group.enter()
             URLSession.shared.downloadTask(with: url) { at, _, _ in
                 if let at = at {
-                    try? FileManager.default.removeItem(at: at)
-                    try? FileManager.default.moveItem(at: at, to: to)
+                    do {
+                        try FileManager.default.moveItem(at: at, to: to)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                 }
                 group.leave()
             }.resume()
