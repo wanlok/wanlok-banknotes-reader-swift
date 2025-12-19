@@ -16,3 +16,12 @@ let detectionMethods: [DetectionMethod] = [
     DetectionMethod(title: "Vuforia", type: VuforiaViewController.self),
     DetectionMethod(title: "Dummy", type: DummyViewController.self)
 ]
+
+struct Language {
+    let title: String
+}
+
+let languages: [Language] = [
+    Language(title: "English"),
+    Language(title: "繁體中文")
+]

@@ -14,6 +14,7 @@ typealias SettingRow = (
 )
 
 class SettingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    let defaults = UserDefaults.standard
     
     let identifier: String = "SettingViewController"
     
@@ -70,5 +71,9 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
             cell.accessoryType = .none
         }
         return cell
+    }
+    
+    func isRowSelected(_ key: String, _ index: Int) -> UITableViewCell.AccessoryType? {
+        return defaults.integer(forKey: key) == index ? .checkmark : nil
     }
 }

@@ -9,12 +9,14 @@ import UIKit
 
 class LanguageViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
-        let rows: [SettingRow] = [
-            (title: "English", subtitle: nil, accessoryType: .checkmark),
-            (title: "繁體中文", subtitle: nil, accessoryType: nil)
-        ]
         return [
-            (title: "Languages", rows: rows)
+            (title: "Languages", rows: languages.enumerated().map { index, language in
+                (
+                    title: language.title,
+                    subtitle: nil,
+                    accessoryType: isRowSelected("language", index)
+                )
+            })
         ]
     }
     
@@ -24,6 +26,8 @@ class LanguageViewController: SettingViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        defaults.set(indexPath.row, forKey: "language")
         print(indexPath.row)
+        tableView.reloadData()
     }
 }

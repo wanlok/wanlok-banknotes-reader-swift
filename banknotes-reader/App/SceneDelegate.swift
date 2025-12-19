@@ -9,6 +9,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var tabBarController: UITabBarController?
+    let defaults = UserDefaults.standard
     
     func getCameraViewController() -> UIViewController? {
         return tabBarController?.viewControllers?[0]
@@ -35,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         tabBarController = UITabBarController()
         
-        changeCameraViewController(0)
+        changeCameraViewController(defaults.integer(forKey: "detectionMethod"))
         
         let settingViewController = SettingsLandingViewController()
         settingViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)

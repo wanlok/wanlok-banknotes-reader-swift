@@ -9,15 +9,14 @@ import UIKit
 
 class DetectionMethodsViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
-        let rows: [SettingRow] = detectionMethods.map { detectionMethod in
-            (
-                title: detectionMethod.title,
-                subtitle: nil,
-                accessoryType: getDetectionMethodAccessoryType(detectionMethod.title)
-            )
-        }
         return [
-            (title: "Detection Methods", rows: rows)
+            (title: "Detection Methods", rows: detectionMethods.enumerated().map { index, detectionMethod in
+                (
+                    title: detectionMethod.title,
+                    subtitle: nil,
+                    accessoryType: isRowSelected("detectionMethod", index)
+                )
+            })
         ]
     }
     
@@ -26,27 +25,13 @@ class DetectionMethodsViewController: SettingViewController {
         title = "Detection Methods"
     }
     
-    func getDetectionMethodAccessoryType(_ title: String) -> UITableViewCell.AccessoryType? {
-        guard let sceneDelegate = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate, let viewController = sceneDelegate.getCameraViewController() else {
-            return nil
-        }
-        var accessoryType: UITableViewCell.AccessoryType? = nil
-        for detectionMethod in detectionMethods {
-            if detectionMethod.title == title && viewController.isKind(of: detectionMethod.type) {
-                accessoryType = .checkmark
-                break
-            }
-        }
-        return accessoryType
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let sceneDelegate = UIApplication.shared.connectedScenes
             .first(where: { $0.activationState == .foregroundActive })?.delegate as? SceneDelegate else {
             return
         }
         sceneDelegate.changeCameraViewController(indexPath.row)
+        defaults.set(indexPath.row, forKey: "detectionMethod")
         tableView.reloadData()
     }
 }
