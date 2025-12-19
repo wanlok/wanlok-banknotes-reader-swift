@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  banknotes-reader
+
+  Created by wanlok on 19/12/2025.
+  
+*/
+camera_title="Camera";
+
+setting_landing_title="Settings";
+setting_landing_detection_method="Detection Methods";
+setting_landing_dataset="Dataset";
+setting_landing_languages="Languages";
+
+detection_method_title="Detection Methods";
+
+dataset_title="Dataset";
+dataset_sync="Sync";
+
+language_title="Languages";

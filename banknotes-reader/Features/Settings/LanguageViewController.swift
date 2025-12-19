@@ -10,7 +10,7 @@ import UIKit
 class LanguageViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
         return [
-            (title: "Languages", rows: languages.enumerated().map { index, language in
+            (title: Localization.shared.get("language_title"), rows: languages.enumerated().map { index, language in
                 (
                     title: language.title,
                     subtitle: nil,
@@ -22,12 +22,25 @@ class LanguageViewController: SettingViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Languages"
+        updateLanguage()
+    }
+    
+    func updateLanguage() {
+        Localization.shared.update()
+        if let viewControllers = tabBarController?.viewControllers {
+            let cameraViewController = viewControllers[0]
+            cameraViewController.title = Localization.shared.get("camera_title")
+        }
+        if let viewControllers = navigationController?.viewControllers {
+            let settingLandingViewController = viewControllers[viewControllers.count - 2]
+            settingLandingViewController.title = Localization.shared.get("setting_landing_title")
+        }
+        title = Localization.shared.get("language_title")
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defaults.set(indexPath.row, forKey: "language")
-        print(indexPath.row)
+        updateLanguage()
         tableView.reloadData()
     }
 }

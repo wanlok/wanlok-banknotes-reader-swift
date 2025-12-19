@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  banknotes-reader
+
+  Created by wanlok on 19/12/2025.
+  
+*/
+camera_title="相機";
+
+setting_landing_title="設定";
+setting_landing_detection_method="偵測方法";
+setting_landing_dataset="資料庫";
+setting_landing_languages="語言";
+
+detection_method_title="偵測方法";
+
+dataset_title="資料庫";
+dataset_sync="同步";
+
+language_title="語言";

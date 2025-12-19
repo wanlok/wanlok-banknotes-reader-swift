@@ -10,27 +10,18 @@ import UIKit
 class SettingsLandingViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
         return [
-            (title: "Settings", rows: getSettingRows()),
-            (title: "Languages", rows: getLanguageRows())
+            (title: Localization.shared.get("setting_landing_title"), rows: getSettingRows()),
+            (title: Localization.shared.get("setting_landing_languages"), rows: getLanguageRows())
         ]
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Settings"
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
     }
     
     func getSettingRows() -> [SettingRow] {
         var rows: [SettingRow] = []
         let detectionMethod = detectionMethods[defaults.integer(forKey: "detectionMethod")].title
-        rows.append((title: "Detection Methods", subtitle: detectionMethod, accessoryType: .disclosureIndicator))
-        if detectionMethod != "Dummy" {
-            rows.append((title: "Dataset", subtitle: nil, accessoryType: .disclosureIndicator))
+        rows.append((title: Localization.shared.get("setting_landing_detection_method"), subtitle: detectionMethod, accessoryType: .disclosureIndicator))
+        let index = defaults.integer(forKey: "detectionMethod")
+        if index == 0 || index == 1 {
+            rows.append((title: Localization.shared.get("setting_landing_dataset"), subtitle: nil, accessoryType: .disclosureIndicator))
         }
         return rows
     }
@@ -38,8 +29,19 @@ class SettingsLandingViewController: SettingViewController {
     func getLanguageRows() -> [SettingRow] {
         var rows: [SettingRow] = []
         let language = languages[defaults.integer(forKey: "language")].title
-        rows.append((title: "Languages", subtitle: language, accessoryType: .disclosureIndicator))
+        rows.append((title: Localization.shared.get("setting_landing_languages"), subtitle: language, accessoryType: .disclosureIndicator))
         return rows
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Localization.shared.update()
+        title = Localization.shared.get("setting_landing_title")
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

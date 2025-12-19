@@ -30,7 +30,7 @@ class DatasetViewController: NetworkViewController, UITableViewDataSource, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Dataset"
+        title = Localization.shared.get("dataset_title")
         
         activityIndicator.startAnimating()
         tableView.dataSource = self
@@ -38,7 +38,7 @@ class DatasetViewController: NetworkViewController, UITableViewDataSource, UITab
         tableView.register(UINib(nibName: "DatasetTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Sync",
+            title: Localization.shared.get("dataset_sync"),
             style: .plain,
             target: self,
             action: #selector(onSyncButtonClicked)

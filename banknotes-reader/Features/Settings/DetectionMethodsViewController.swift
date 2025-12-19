@@ -10,7 +10,7 @@ import UIKit
 class DetectionMethodsViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
         return [
-            (title: "Detection Methods", rows: detectionMethods.enumerated().map { index, detectionMethod in
+            (title: Localization.shared.get("detection_method_title"), rows: detectionMethods.enumerated().map { index, detectionMethod in
                 (
                     title: detectionMethod.title,
                     subtitle: nil,
@@ -22,7 +22,7 @@ class DetectionMethodsViewController: SettingViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Detection Methods"
+        title = Localization.shared.get("detection_method_title")
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

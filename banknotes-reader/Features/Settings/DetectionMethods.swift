@@ -19,9 +19,10 @@ let detectionMethods: [DetectionMethod] = [
 
 struct Language {
     let title: String
+    let code: String
 }
 
 let languages: [Language] = [
-    Language(title: "English"),
-    Language(title: "繁體中文")
+    Language(title: "English", code: "en"),
+    Language(title: "繁體中文", code: "zh-Hant")
 ]

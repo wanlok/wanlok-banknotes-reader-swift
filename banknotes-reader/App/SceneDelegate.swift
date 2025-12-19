@@ -10,14 +10,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var tabBarController: UITabBarController?
     let defaults = UserDefaults.standard
-    
-    func getCameraViewController() -> UIViewController? {
-        return tabBarController?.viewControllers?[0]
-    }
 
     func changeCameraViewController(_ i: Int) {
         let cameraViewController = detectionMethods[i].type.init()
-        cameraViewController.tabBarItem = UITabBarItem(title: "Camera", image: UIImage(systemName: "camera"), tag: 0)
+        cameraViewController.tabBarItem = UITabBarItem(title: Localization.shared.get("camera_title"), image: UIImage(systemName: "camera"), tag: 0)
         var viewControllers = tabBarController?.viewControllers ?? []
         if viewControllers.count > 0 {
             viewControllers[0] = cameraViewController
@@ -33,13 +29,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else {
             return
         }
-
+        
+        Localization.shared.update()
+        
         tabBarController = UITabBarController()
         
         changeCameraViewController(defaults.integer(forKey: "detectionMethod"))
         
         let settingViewController = SettingsLandingViewController()
-        settingViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 1)
+        settingViewController.tabBarItem = UITabBarItem(title: Localization.shared.get("setting_landing_title"), image: UIImage(systemName: "gear"), tag: 1)
         tabBarController?.viewControllers?.append(UINavigationController(rootViewController: settingViewController))
         
         // Set up window
