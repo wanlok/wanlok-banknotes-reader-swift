@@ -1,13 +1,13 @@
 //
-//  DetectionMethodsViewController.swift
+//  DetectionMethodViewController.swift
 //  banknotes-reader
 //
-//  Created by Robert Wan on 26/10/2025.
+//  Created by wanlok on 20/12/2025.
 //
 
 import UIKit
 
-class DetectionMethodsViewController: SettingViewController {
+class DetectionMethodViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
         return [
             (title: Localization.shared.get("detection_method_title"), rows: detectionMethods.enumerated().map { index, detectionMethod in

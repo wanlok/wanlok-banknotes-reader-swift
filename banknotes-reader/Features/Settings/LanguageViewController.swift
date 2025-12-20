@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class LanguageViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
@@ -40,6 +41,7 @@ class LanguageViewController: SettingViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         defaults.set(indexPath.row, forKey: "language")
+        defaults.removeObject(forKey: "voiceIdentifier")
         updateLanguage()
         tableView.reloadData()
     }

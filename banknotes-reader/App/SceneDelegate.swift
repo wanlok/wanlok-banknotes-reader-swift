@@ -36,9 +36,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         changeCameraViewController(defaults.integer(forKey: "detectionMethod"))
         
-        let settingViewController = SettingsLandingViewController()
-        settingViewController.tabBarItem = UITabBarItem(title: Localization.shared.get("setting_landing_title"), image: UIImage(systemName: "gear"), tag: 1)
-        tabBarController?.viewControllers?.append(UINavigationController(rootViewController: settingViewController))
+        let settingLandingViewController = SettingLandingViewController()
+        settingLandingViewController.tabBarItem = UITabBarItem(title: Localization.shared.get("setting_landing_title"), image: UIImage(systemName: "gear"), tag: 1)
+        tabBarController?.viewControllers?.append(UINavigationController(rootViewController: settingLandingViewController))
         
         // Set up window
         let window = UIWindow(windowScene: windowScene)

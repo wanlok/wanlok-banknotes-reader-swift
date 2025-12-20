@@ -1,24 +1,24 @@
 //
-//  SettingsLandingViewController.swift
+//  SettingLandingViewController.swift
 //  banknotes-reader
 //
-//  Created by Robert Wan on 26/10/2025.
+//  Created by wanlok on 20/12/2025.
 //
 
 import UIKit
+import AVFoundation
 
-class SettingsLandingViewController: SettingViewController {
+class SettingLandingViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
         return [
             (title: Localization.shared.get("setting_landing_title"), rows: getSettingRows()),
-            (title: Localization.shared.get("setting_landing_languages"), rows: getLanguageRows())
+            (title: Localization.shared.get("setting_landing_language"), rows: getLanguageRows())
         ]
     }
     
     func getSettingRows() -> [SettingRow] {
         var rows: [SettingRow] = []
-        let detectionMethod = detectionMethods[defaults.integer(forKey: "detectionMethod")].title
-        rows.append((title: Localization.shared.get("setting_landing_detection_method"), subtitle: detectionMethod, accessoryType: .disclosureIndicator))
+        rows.append((title: Localization.shared.get("setting_landing_detection_method"), subtitle: detectionMethods[defaults.integer(forKey: "detectionMethod")].title, accessoryType: .disclosureIndicator))
         let index = defaults.integer(forKey: "detectionMethod")
         if index == 0 || index == 1 {
             rows.append((title: Localization.shared.get("setting_landing_dataset"), subtitle: nil, accessoryType: .disclosureIndicator))
@@ -28,8 +28,12 @@ class SettingsLandingViewController: SettingViewController {
     
     func getLanguageRows() -> [SettingRow] {
         var rows: [SettingRow] = []
-        let language = languages[defaults.integer(forKey: "language")].title
-        rows.append((title: Localization.shared.get("setting_landing_languages"), subtitle: language, accessoryType: .disclosureIndicator))
+        let isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
+        rows.append((title: Localization.shared.get("setting_landing_language"), subtitle: languages[defaults.integer(forKey: "language")].title, accessoryType: .disclosureIndicator))
+        rows.append((title: "VoiceOver", subtitle: isVoiceOverRunning ? Localization.shared.get("setting_landing_voice_over_on") : Localization.shared.get("setting_landing_voice_over_off"), accessoryType: nil))
+        if !isVoiceOverRunning {
+            rows.append((title: Localization.shared.get("setting_landing_voice"), subtitle: getSelectedVoice(defaults)?.name, accessoryType: .disclosureIndicator))
+        }
         return rows
     }
     
@@ -46,7 +50,7 @@ class SettingsLandingViewController: SettingViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
-            navigationController?.pushViewController(DetectionMethodsViewController(), animated: true)
+            navigationController?.pushViewController(DetectionMethodViewController(), animated: true)
         } else if indexPath.section == 0 && indexPath.row == 1 { // Dataset
             let index = defaults.integer(forKey: "detectionMethod")
             if index == 0 {
@@ -56,6 +60,10 @@ class SettingsLandingViewController: SettingViewController {
             }
         } else if indexPath.section == 1 && indexPath.row == 0 {
             navigationController?.pushViewController(LanguageViewController(), animated: true)
+        } else if indexPath.section == 1 && indexPath.row == 2 {
+            navigationController?.pushViewController(VoiceViewController(), animated: true)
+        } else {
+            tableView.reloadData()
         }
     }
 }
