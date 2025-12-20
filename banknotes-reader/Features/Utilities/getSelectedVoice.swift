@@ -8,7 +8,22 @@
 import AVFoundation
 
 func getSelectedVoice(_ defaults: UserDefaults) -> AVSpeechSynthesisVoice? {
+    var target: AVSpeechSynthesisVoice? = nil
     let voiceIdentifier = defaults.string(forKey: "voiceIdentifier")
-    let voices = getVoices(defaults)
-    return voices.first(where: { $0.identifier == voiceIdentifier }) ?? voices.first
+    let languageVoices = getLanguageVoices(defaults)
+    for languageVoice in languageVoices {
+        for voice in languageVoice.voices {
+            if voice.identifier == voiceIdentifier {
+                target = voice
+                break
+            }
+        }
+        if target != nil {
+            break
+        }
+    }
+    if target == nil && languageVoices.count > 0 && languageVoices[0].voices.count > 0 {
+        target = languageVoices[0].voices[0]
+    }
+    return target
 }

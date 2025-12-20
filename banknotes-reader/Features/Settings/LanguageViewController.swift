@@ -11,11 +11,11 @@ import AVFoundation
 class LanguageViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
         return [
-            (title: Localization.shared.get("language_title"), rows: languages.enumerated().map { index, language in
+            (title: Localization.shared.get("language_title"), rows: languages.enumerated().map { i, language in
                 (
                     title: language.title,
                     subtitle: nil,
-                    accessoryType: isRowSelected("language", index)
+                    accessoryType: isRowSelected("language", i)
                 )
             })
         ]

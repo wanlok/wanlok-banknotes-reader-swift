@@ -9,30 +9,33 @@ import UIKit
 import AVFoundation
 
 class VoiceViewController: SettingViewController {
+    var languageVoices: [(language: String, voices: [AVSpeechSynthesisVoice])] = []
+    
     override var sections: [(title: String, rows: [SettingRow])] {
         let voiceIdentifier = defaults.string(forKey: "voiceIdentifier")
-        return [
-            (title: Localization.shared.get("voice_title"), rows: getVoices(defaults).enumerated().map { index, voice in
-                return (
-                    title: "\(voice.name) \(voice.language)",
-                    subtitle: nil,
-                    accessoryType: (voiceIdentifier == nil && index == 0) || voice.identifier == voiceIdentifier ? .checkmark : nil
-                )
-            })
-        ]
+        return languageVoices.enumerated().map { i, languageVoice in
+            return (
+                title: languageVoice.language,
+                rows: languageVoice.voices.enumerated().map { j, voice in
+                    return (
+                        title: "\(voice.name) \(voice.language)",
+                        subtitle: nil,
+                        accessoryType: (voiceIdentifier == nil && i == 0 && j == 0) || voice.identifier == voiceIdentifier ? .checkmark : nil
+                    )
+                }
+            )
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         title = Localization.shared.get("voice_title")
+        languageVoices = getLanguageVoices(defaults)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        defaults.setValue(getVoices(defaults)[indexPath.row].identifier, forKey: "voiceIdentifier")
+        let voiceIdentifier = languageVoices[indexPath.section].voices[indexPath.row].identifier
+        defaults.setValue(voiceIdentifier, forKey: "voiceIdentifier")
         tableView.reloadData()
     }
 }
