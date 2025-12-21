@@ -8,7 +8,7 @@
 import UIKit
 
 class DetectionMethodViewController: SettingViewController {
-    override var sections: [(title: String, rows: [SettingRow])] {
+    override var sections: [(title: String, rows: [Row])] {
         return [
             (title: Localization.shared.get("detection_method_title"), rows: detectionMethods.enumerated().map { i, detectionMethod in
                 TitleSubtitleAccessoryTypeRow(

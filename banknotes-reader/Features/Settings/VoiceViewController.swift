@@ -11,7 +11,7 @@ import AVFoundation
 class VoiceViewController: SettingViewController {
     var languageVoices: [(language: String, voices: [AVSpeechSynthesisVoice])] = []
     
-    override var sections: [(title: String, rows: [SettingRow])] {
+    override var sections: [(title: String, rows: [Row])] {
         let voiceIdentifier = defaults.string(forKey: "voiceIdentifier")
         return languageVoices.enumerated().map { i, languageVoice in
             return (

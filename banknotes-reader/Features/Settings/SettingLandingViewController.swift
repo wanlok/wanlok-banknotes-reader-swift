@@ -9,15 +9,15 @@ import UIKit
 import AVFoundation
 
 class SettingLandingViewController: SettingViewController {
-    override var sections: [(title: String, rows: [SettingRow])] {
+    override var sections: [(title: String, rows: [Row])] {
         return [
             (title: Localization.shared.get("setting_landing_title"), rows: getSettingRows()),
             (title: Localization.shared.get("setting_landing_language_and_voice"), rows: getLanguageRows())
         ]
     }
     
-    func getSettingRows() -> [SettingRow] {
-        var rows: [SettingRow] = []
+    func getSettingRows() -> [Row] {
+        var rows: [Row] = []
         rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_detection_method"), subtitle: detectionMethods[defaults.integer(forKey: "detectionMethod")].title, accessoryType: .disclosureIndicator))
         let index = defaults.integer(forKey: "detectionMethod")
         if index == 0 || index == 1 {
@@ -26,15 +26,15 @@ class SettingLandingViewController: SettingViewController {
         return rows
     }
     
-    func getLanguageRows() -> [SettingRow] {
-        var rows: [SettingRow] = []
+    func getLanguageRows() -> [Row] {
+        var rows: [Row] = []
         let isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
         rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_language"), subtitle: languages[defaults.integer(forKey: "language")].title, accessoryType: .disclosureIndicator))
         rows.append(TitleSubtitleAccessoryTypeRow(title: "VoiceOver", subtitle: isVoiceOverRunning ? Localization.shared.get("setting_landing_voice_over_on") : Localization.shared.get("setting_landing_voice_over_off"), accessoryType: nil))
         if !isVoiceOverRunning {
             rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_voice"), subtitle: getSelectedVoice(defaults)?.name, accessoryType: .disclosureIndicator))
-            rows.append(TitleSliderRow(title: Localization.shared.get("setting_landing_rate"), min: AVSpeechUtteranceMinimumSpeechRate, max: AVSpeechUtteranceMaximumSpeechRate, value: getSelectedRate(defaults)))
-            rows.append(TitleSliderRow(title: Localization.shared.get("setting_landing_pitch"), min: 0.5, max: 2.0, value: getSelectedPitch(defaults)))
+            rows.append(TitleMinMaxValueRow(title: Localization.shared.get("setting_landing_rate"), min: AVSpeechUtteranceMinimumSpeechRate, max: AVSpeechUtteranceMaximumSpeechRate, value: getSelectedRate(defaults)))
+            rows.append(TitleMinMaxValueRow(title: Localization.shared.get("setting_landing_pitch"), min: 0.5, max: 2.0, value: getSelectedPitch(defaults)))
             rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_reset_rate_and_pitch"), subtitle: nil, accessoryType: nil))
         }
         return rows

@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 
 class LanguageViewController: SettingViewController {
-    override var sections: [(title: String, rows: [SettingRow])] {
+    override var sections: [(title: String, rows: [Row])] {
         return [
             (title: Localization.shared.get("language_title"), rows: languages.enumerated().map { i, language in
                 TitleSubtitleAccessoryTypeRow(

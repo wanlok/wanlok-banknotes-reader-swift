@@ -41,7 +41,7 @@ class AmountDetectionViewController: UIViewController {
         amountView.isAccessibilityElement = true
         amountView.amountLabel.text = amount
         amountView.currencyLabel.text = currency
-        amountView.accessibilityLabel = "\(amount) \(currency)"
+        amountView.accessibilityAttributedLabel = getAccessibilityAttributedLabel([amount, currency])
         self.amountView = amountView
         view.addSubview(amountView)
 
@@ -52,9 +52,11 @@ class AmountDetectionViewController: UIViewController {
             amountView.heightAnchor.constraint(equalTo: amountView.widthAnchor)
         ])
 
-        UIAccessibility.post(notification: .layoutChanged, argument: amountView)
-        
-        speak("\(amount) \(currency)")
+        if UIAccessibility.isVoiceOverRunning {
+            UIAccessibility.post(notification: .layoutChanged, argument: amountView)
+        } else {
+            speak("\(amount) \(currency)")
+        }
     }
     
     func hideAmountView() {
@@ -71,6 +73,20 @@ class AmountDetectionViewController: UIViewController {
         } else {
             translateLocale.localizedString(forCurrencyCode: currencyCode) ?? currencyCode
         }
+    }
+    
+    func getAccessibilityAttributedLabel(_ strings: [String]) -> NSMutableAttributedString {
+        let accessibilityAttributedLabel = NSMutableAttributedString()
+        let code = languages[defaults.integer(forKey: "language")].code
+        for string in strings {
+            accessibilityAttributedLabel.append(NSAttributedString(
+                string: string,
+                attributes: [
+                    .accessibilitySpeechLanguage: code
+                ]
+            ))
+        }
+        return accessibilityAttributedLabel
     }
     
     func speak(_ text: String) {

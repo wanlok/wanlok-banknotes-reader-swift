@@ -7,30 +7,13 @@
 
 import UIKit
 
-protocol SettingRow {
-    
-}
-
-struct TitleSubtitleAccessoryTypeRow: SettingRow {
-    let title: String
-    let subtitle: String?
-    let accessoryType: UITableViewCell.AccessoryType?
-}
-
-struct TitleSliderRow: SettingRow {
-    let title: String
-    let min: Float
-    let max: Float
-    let value: Float
-}
-
 class SettingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let defaults = UserDefaults.standard
     
     let titleSubtitleAccessoryTypeTableViewCellIdentifier: String = "TitleSubtitleAccessoryTypeTableViewCell"
     let titleSliderTableViewCellIdentifier: String = "TitleSliderTableViewCell"
     
-    var sections:  [(title: String, rows: [SettingRow])] {
+    var sections:  [(title: String, rows: [Row])] {
         fatalError("Subclasses must override sections")
     }
     
@@ -74,7 +57,7 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
         let row = sections[indexPath.section].rows[indexPath.row]
         if let row = row as? TitleSubtitleAccessoryTypeRow {
             cell = getTitleSubtitleAccessoryTypeTableViewCell(tableView, row)
-        } else if let row = row as? TitleSliderRow {
+        } else if let row = row as? TitleMinMaxValueRow {
             cell = getTitleSliderTableViewCell(tableView, indexPath, row)
         } else {
             fatalError("tableView cellForRowAt")
@@ -100,7 +83,7 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
-    func getTitleSliderTableViewCell(_ tableView: UITableView, _ indexPath: IndexPath, _ row: TitleSliderRow) -> UITableViewCell {
+    func getTitleSliderTableViewCell(_ tableView: UITableView, _ indexPath: IndexPath, _ row: TitleMinMaxValueRow) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: titleSliderTableViewCellIdentifier, for: indexPath) as? TitleSliderTableViewCell else {
             fatalError("getTitleSliderTableViewCell")
         }
