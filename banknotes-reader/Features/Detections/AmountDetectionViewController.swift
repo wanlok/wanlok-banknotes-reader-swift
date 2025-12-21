@@ -33,25 +33,15 @@ class AmountDetectionViewController: UIViewController {
             return
         }
         
-        let currency = slices[0].uppercased()
+        let currency = getLocalizedCurrency(slices[0].uppercased())
         let amount = "\(slices[1])"
-        let localizedCurrency = if let key = currencyMapping[currency] {
-            Localization.shared.get(key)
-        } else {
-            ""
-        }
-        let localizedCurrencySpeak = if let key = currencyMapping[currency] {
-            Localization.shared.get("\(key)_speak")
-        } else {
-            ""
-        }
         
         let amountView = AmountView()
         amountView.translatesAutoresizingMaskIntoConstraints = false
         amountView.isAccessibilityElement = true
         amountView.amountLabel.text = amount
-        amountView.currencyLabel.text = localizedCurrency
-        amountView.accessibilityLabel = "\(amount) \(localizedCurrency)"
+        amountView.currencyLabel.text = currency
+        amountView.accessibilityLabel = "\(amount) \(currency)"
         self.amountView = amountView
         view.addSubview(amountView)
 
@@ -64,13 +54,23 @@ class AmountDetectionViewController: UIViewController {
 
         UIAccessibility.post(notification: .layoutChanged, argument: amountView)
         
-        speak("\(amount) \(localizedCurrencySpeak)")
+        speak("\(amount) \(currency)")
     }
     
     func hideAmountView() {
         guard amountView != nil else { return }
         amountView?.removeFromSuperview()
         amountView = nil
+    }
+    
+    func getLocalizedCurrency(_ currencyCode: String) -> String {
+        let code = languages[defaults.integer(forKey: "language")].code
+        let translateLocale = Locale(identifier: code)
+        return if code == "en" {
+            currencyCode
+        } else {
+            translateLocale.localizedString(forCurrencyCode: currencyCode) ?? currencyCode
+        }
     }
     
     func speak(_ text: String) {
