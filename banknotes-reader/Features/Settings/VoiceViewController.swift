@@ -15,7 +15,7 @@ class VoiceViewController: SettingViewController {
         let voiceIdentifier = defaults.string(forKey: "voiceIdentifier")
         return languageVoices.enumerated().map { i, languageVoice in
             return (
-                title: languageVoice.language,
+                title: getCountryName(languageVoice.language),
                 rows: languageVoice.voices.enumerated().map { j, voice in
                     return (
                         title: voice.name,
@@ -37,5 +37,14 @@ class VoiceViewController: SettingViewController {
         let voiceIdentifier = languageVoices[indexPath.section].voices[indexPath.row].identifier
         defaults.setValue(voiceIdentifier, forKey: "voiceIdentifier")
         tableView.reloadData()
+    }
+    
+    func getCountryName(_ language: String) -> String {
+        let locale = Locale(identifier: language)
+        let translateLocale = Locale(identifier: languages[defaults.integer(forKey: "language")].code)
+        guard let regionCode = locale.regionCode, let countryName = translateLocale.localizedString(forRegionCode: regionCode) else {
+            return language
+        }
+        return countryName
     }
 }

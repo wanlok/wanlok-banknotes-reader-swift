@@ -52,7 +52,7 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if sections[section].title == title { return 0 }
-        if section == 0 { return 48 }
+        if section == 0 { return 34 }
         return 24
     }
 
