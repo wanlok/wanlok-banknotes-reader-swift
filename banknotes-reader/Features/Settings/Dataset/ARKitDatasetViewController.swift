@@ -67,8 +67,8 @@ class ARKitDatasetViewController: DatasetViewController {
         }
     }
     
-    func delete(_ key: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    func deleteResult(_ key: String?) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let key = key else {
             return
         }
         let context = appDelegate.persistentContainer.viewContext
@@ -122,7 +122,7 @@ class ARKitDatasetViewController: DatasetViewController {
     -> UISwipeActionsConfiguration? {
         return UISwipeActionsConfiguration(actions: [UIContextualAction(style: .destructive, title: "Delete") { _, _, completion in
             let key = self.sections[indexPath.section].rows[indexPath.row].key
-            self.delete(key)
+            self.deleteResult(key)
             tableView.beginUpdates()
             self.sections[indexPath.section].rows.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
