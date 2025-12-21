@@ -79,8 +79,8 @@ class AmountDetectionViewController: UIViewController {
         }
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = voice
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        utterance.pitchMultiplier = 1.0
+        utterance.rate = getSelectedRate(defaults)
+        utterance.pitchMultiplier = getSelectedPitch(defaults)
         utterance.volume = 1.0
         synthesizer.speak(utterance)
     }
