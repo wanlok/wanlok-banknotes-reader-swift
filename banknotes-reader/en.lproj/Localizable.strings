@@ -7,6 +7,9 @@
 */
 camera_title="Camera";
 
+amount_detection_aud="AUD";
+amount_detection_aud_speak = "Australian Dollars";
+
 setting_landing_title="Settings";
 setting_landing_detection_method="Detection Method";
 setting_landing_dataset="Dataset";

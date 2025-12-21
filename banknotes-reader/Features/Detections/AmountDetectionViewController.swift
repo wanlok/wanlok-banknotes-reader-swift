@@ -6,12 +6,17 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AmountDetectionViewController: UIViewController {
 
     private var amountView: AmountView?
     
     private let spacing: CGFloat = 32
+    
+    let defaults = UserDefaults.standard
+    
+    let synthesizer = AVSpeechSynthesizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +33,25 @@ class AmountDetectionViewController: UIViewController {
             return
         }
         
-        let currency = "\(slices[0])"
+        let currency = slices[0].uppercased()
         let amount = "\(slices[1])"
+        let localizedCurrency = if let key = currencyMapping[currency] {
+            Localization.shared.get(key)
+        } else {
+            ""
+        }
+        let localizedCurrencySpeak = if let key = currencyMapping[currency] {
+            Localization.shared.get("\(key)_speak")
+        } else {
+            ""
+        }
         
         let amountView = AmountView()
         amountView.translatesAutoresizingMaskIntoConstraints = false
         amountView.isAccessibilityElement = true
-        amountView.currencyLabel.text = currency
         amountView.amountLabel.text = amount
-        amountView.accessibilityLabel = "\(currency) \(amount)"
+        amountView.currencyLabel.text = localizedCurrency
+        amountView.accessibilityLabel = "\(amount) \(localizedCurrency)"
         self.amountView = amountView
         view.addSubview(amountView)
 
@@ -48,12 +63,25 @@ class AmountDetectionViewController: UIViewController {
         ])
 
         UIAccessibility.post(notification: .layoutChanged, argument: amountView)
+        
+        speak("\(amount) \(localizedCurrencySpeak)")
     }
-
+    
     func hideAmountView() {
         guard amountView != nil else { return }
         amountView?.removeFromSuperview()
         amountView = nil
     }
-
+    
+    func speak(_ text: String) {
+        guard let voice = getSelectedVoice(defaults) else {
+            return
+        }
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = voice
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        utterance.pitchMultiplier = 1.0
+        utterance.volume = 1.0
+        synthesizer.speak(utterance)
+    }
 }

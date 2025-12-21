@@ -27,3 +27,7 @@ let languages: [Language] = [
     Language(title: "English", code: "en", voice: "en"),
     Language(title: "繁體中文", code: "zh-Hant", voice: "zh")
 ]
+
+let currencyMapping = [
+    "AUD": "amount_detection_aud"
+]

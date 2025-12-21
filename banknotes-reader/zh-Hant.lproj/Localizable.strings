@@ -7,6 +7,9 @@
 */
 camera_title="相機";
 
+amount_detection_aud="澳元";
+amount_detection_aud_speak = "澳元";
+
 setting_landing_title="設定";
 setting_landing_detection_method="偵測方法";
 setting_landing_dataset="資料庫";
