@@ -11,7 +11,7 @@ class DetectionMethodViewController: SettingViewController {
     override var sections: [(title: String, rows: [SettingRow])] {
         return [
             (title: Localization.shared.get("detection_method_title"), rows: detectionMethods.enumerated().map { i, detectionMethod in
-                (
+                TitleSubtitleAccessoryTypeRow(
                     title: detectionMethod.title,
                     subtitle: nil,
                     accessoryType: isRowSelected("detectionMethod", i)

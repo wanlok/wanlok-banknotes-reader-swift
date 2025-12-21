@@ -18,10 +18,10 @@ class SettingLandingViewController: SettingViewController {
     
     func getSettingRows() -> [SettingRow] {
         var rows: [SettingRow] = []
-        rows.append((title: Localization.shared.get("setting_landing_detection_method"), subtitle: detectionMethods[defaults.integer(forKey: "detectionMethod")].title, accessoryType: .disclosureIndicator))
+        rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_detection_method"), subtitle: detectionMethods[defaults.integer(forKey: "detectionMethod")].title, accessoryType: .disclosureIndicator))
         let index = defaults.integer(forKey: "detectionMethod")
         if index == 0 || index == 1 {
-            rows.append((title: Localization.shared.get("setting_landing_dataset"), subtitle: nil, accessoryType: .disclosureIndicator))
+            rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_dataset"), subtitle: nil, accessoryType: .disclosureIndicator))
         }
         return rows
     }
@@ -29,10 +29,24 @@ class SettingLandingViewController: SettingViewController {
     func getLanguageRows() -> [SettingRow] {
         var rows: [SettingRow] = []
         let isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
-        rows.append((title: Localization.shared.get("setting_landing_language"), subtitle: languages[defaults.integer(forKey: "language")].title, accessoryType: .disclosureIndicator))
-        rows.append((title: "VoiceOver", subtitle: isVoiceOverRunning ? Localization.shared.get("setting_landing_voice_over_on") : Localization.shared.get("setting_landing_voice_over_off"), accessoryType: nil))
+        let rate: Float
+        if defaults.object(forKey: "rate") == nil {
+            rate = AVSpeechUtteranceDefaultSpeechRate
+        } else {
+            rate = defaults.float(forKey: "rate")
+        }
+        let pitch: Float
+        if defaults.object(forKey: "pitch") == nil {
+            pitch = 1.0
+        } else {
+            pitch = defaults.float(forKey: "pitch")
+        }
+        rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_language"), subtitle: languages[defaults.integer(forKey: "language")].title, accessoryType: .disclosureIndicator))
+        rows.append(TitleSubtitleAccessoryTypeRow(title: "VoiceOver", subtitle: isVoiceOverRunning ? Localization.shared.get("setting_landing_voice_over_on") : Localization.shared.get("setting_landing_voice_over_off"), accessoryType: nil))
         if !isVoiceOverRunning {
-            rows.append((title: Localization.shared.get("setting_landing_voice"), subtitle: getSelectedVoice(defaults)?.name, accessoryType: .disclosureIndicator))
+            rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_voice"), subtitle: getSelectedVoice(defaults)?.name, accessoryType: .disclosureIndicator))
+            rows.append(TitleSliderRow(title: Localization.shared.get("setting_landing_rate"), min: AVSpeechUtteranceMinimumSpeechRate, max: AVSpeechUtteranceMaximumSpeechRate, value: rate))
+            rows.append(TitleSliderRow(title: Localization.shared.get("setting_landing_pitch"), min: 0.5, max: 2.0, value: pitch))
         }
         return rows
     }
@@ -64,6 +78,14 @@ class SettingLandingViewController: SettingViewController {
             navigationController?.pushViewController(VoiceViewController(), animated: true)
         } else {
             tableView.reloadData()
+        }
+    }
+    
+    override func tableViewCellSliderEnded(_ indexPath: IndexPath, _ value: Float) {
+        if indexPath.section == 1 && indexPath.row == 3 {
+            defaults.setValue(value, forKey: "rate")
+        } else if indexPath.section == 1 && indexPath.row == 4 {
+            defaults.setValue(value, forKey: "pitch")
         }
     }
 }

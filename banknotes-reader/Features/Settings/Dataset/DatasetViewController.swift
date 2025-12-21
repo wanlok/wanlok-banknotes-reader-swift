@@ -24,7 +24,7 @@ class DatasetViewController: NetworkViewController, UITableViewDataSource, UITab
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    let identifier: String = "DatasetViewController"
+    let datasetTableViewCellIdentifier: String = "DatasetTableViewCell"
     
     var sections: [(title: String, rows: [DatasetRow])] = []
     
@@ -35,7 +35,7 @@ class DatasetViewController: NetworkViewController, UITableViewDataSource, UITab
         activityIndicator.startAnimating()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: "DatasetTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+        tableView.register(UINib(nibName: "DatasetTableViewCell", bundle: nil), forCellReuseIdentifier: datasetTableViewCellIdentifier)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: Localization.shared.get("dataset_sync"),
@@ -58,7 +58,7 @@ class DatasetViewController: NetworkViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? DatasetTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: datasetTableViewCellIdentifier, for: indexPath) as? DatasetTableViewCell else {
             fatalError("tableView cellForRowAt")
         }
         let row = sections[indexPath.section].rows[indexPath.row]

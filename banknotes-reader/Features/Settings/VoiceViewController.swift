@@ -17,7 +17,7 @@ class VoiceViewController: SettingViewController {
             return (
                 title: getCountryName(languageVoice.language),
                 rows: languageVoice.voices.enumerated().map { j, voice in
-                    return (
+                    return TitleSubtitleAccessoryTypeRow(
                         title: voice.name,
                         subtitle: "\(voice.gender.rawValue)",
                         accessoryType: (voiceIdentifier == nil && i == 0 && j == 0) || voice.identifier == voiceIdentifier ? .checkmark : nil
