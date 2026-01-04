@@ -33,7 +33,7 @@ class SettingLandingViewController: SettingViewController {
         rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_language"), subtitle: languages[defaults.integer(forKey: "language")].title, accessoryType: .disclosureIndicator))
         rows.append(TitleSubtitleAccessoryTypeRow(title: "VoiceOver", subtitle: isVoiceOverRunning ? Localization.shared.get("setting_landing_voice_over_on") : Localization.shared.get("setting_landing_voice_over_off"), accessoryType: nil))
         if !isVoiceOverRunning {
-            rows.append(TitleBoolRow(title: Localization.shared.get("setting_landing_is_voice_enabled"), bool: isVoiceEnabled))
+            rows.append(TitleBoolRow(title: Localization.shared.get("setting_landing_custom_voice"), bool: isVoiceEnabled))
             if isVoiceEnabled {
                 rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_voice"), subtitle: getSelectedVoice(defaults)?.name, accessoryType: .disclosureIndicator))
                 rows.append(TitleMinMaxValueRow(title: Localization.shared.get("setting_landing_rate"), min: AVSpeechUtteranceMinimumSpeechRate, max: AVSpeechUtteranceMaximumSpeechRate, value: getSelectedRate(defaults)))

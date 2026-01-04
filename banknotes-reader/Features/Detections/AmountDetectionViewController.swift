@@ -54,7 +54,7 @@ class AmountDetectionViewController: UIViewController {
 
         if UIAccessibility.isVoiceOverRunning {
             UIAccessibility.post(notification: .layoutChanged, argument: amountView)
-        } else {
+        } else if defaults.bool(forKey: "isVoiceEnabled") {
             speak("\(amount) \(currency)")
         }
     }
