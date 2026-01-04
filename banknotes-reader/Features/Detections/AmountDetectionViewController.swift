@@ -55,7 +55,7 @@ class AmountDetectionViewController: UIViewController {
         let isVoiceEnabled = defaults.object(forKey: "isVoiceEnabled") as? Bool ?? true
         if UIAccessibility.isVoiceOverRunning {
             UIAccessibility.post(notification: .layoutChanged, argument: amountView)
-        } else if defaults.bool(forKey: "isVoiceEnabled") {
+        } else if isVoiceEnabled {
             speak("\(amount) \(currency)")
         }
     }
