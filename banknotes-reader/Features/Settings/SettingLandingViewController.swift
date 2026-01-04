@@ -29,7 +29,7 @@ class SettingLandingViewController: SettingViewController {
     func getLanguageRows() -> [Row] {
         var rows: [Row] = []
         let isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
-        let isVoiceEnabled = defaults.bool(forKey: "isVoiceEnabled")
+        let isVoiceEnabled = defaults.object(forKey: "isVoiceEnabled") as? Bool ?? true
         rows.append(TitleSubtitleAccessoryTypeRow(title: Localization.shared.get("setting_landing_language"), subtitle: languages[defaults.integer(forKey: "language")].title, accessoryType: .disclosureIndicator))
         rows.append(TitleSubtitleAccessoryTypeRow(title: "VoiceOver", subtitle: isVoiceOverRunning ? Localization.shared.get("setting_landing_voice_over_on") : Localization.shared.get("setting_landing_voice_over_off"), accessoryType: nil))
         if !isVoiceOverRunning {

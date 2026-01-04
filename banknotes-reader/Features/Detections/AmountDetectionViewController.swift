@@ -52,6 +52,7 @@ class AmountDetectionViewController: UIViewController {
             amountView.heightAnchor.constraint(equalTo: amountView.widthAnchor)
         ])
 
+        let isVoiceEnabled = defaults.object(forKey: "isVoiceEnabled") as? Bool ?? true
         if UIAccessibility.isVoiceOverRunning {
             UIAccessibility.post(notification: .layoutChanged, argument: amountView)
         } else if defaults.bool(forKey: "isVoiceEnabled") {
