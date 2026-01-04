@@ -9,7 +9,7 @@ import UIKit
 
 func showEmptyDatasetAlert(_ viewController: UIViewController, _ defaults: UserDefaults) {
     DispatchQueue.main.async {
-        let alertController = UIAlertController(title: "Empty Dataset", message: "Please sync the dataset", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Empty Dataset", message: "The app will navigate to the dataset page. Please sync the dataset.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default) { _ in
             guard let tabBarController = viewController.tabBarController, let navigationController = tabBarController.viewControllers?[1] as? UINavigationController else {
                 return
