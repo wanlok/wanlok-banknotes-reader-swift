@@ -113,6 +113,7 @@ class ARKitDatasetViewController: DatasetViewController {
                 self.tableView.reloadData()
                 self.activityIndicator.isHidden = true
                 self.tableView.isHidden = false
+                self.showPlaceholderView(count: rows.count)
             }
         }
     }
@@ -127,6 +128,7 @@ class ARKitDatasetViewController: DatasetViewController {
             self.sections[indexPath.section].rows.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
+            self.showPlaceholderView(count: self.sections[indexPath.section].rows.count)
             completion(true)
         }])
     }

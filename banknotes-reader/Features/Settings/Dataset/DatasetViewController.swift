@@ -71,4 +71,8 @@ class DatasetViewController: NetworkViewController, UITableViewDataSource, UITab
         cell.heightLabel.text = "\(banknote.height)"
         return cell
     }
+    
+    func showPlaceholderView(count: Int) {
+        tableView.backgroundView = count > 0 ? nil : PlaceholderView(frame: tableView.bounds, title: "Empty Dataset", message: "Please click the top right \"Sync\" button to download the latest dataset.")
+    }
 }
