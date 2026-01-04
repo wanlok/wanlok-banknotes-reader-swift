@@ -34,7 +34,12 @@ class VuforiaViewController: AmountDetectionViewController {
                 self.hideAmountView()
             }
         }
-        vuforiaWorker?.start()
+        
+        vuforiaWorker?.start() { count in
+            if count == 0 {
+                showEmptyDatasetAlert(self, self.defaults)
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

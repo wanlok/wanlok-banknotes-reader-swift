@@ -22,7 +22,7 @@ class VuforiaWorker {
         self.callback = callback
     }
 
-    func start() {
+    func start(callback: @escaping (Int) -> Void) {
         let (filePath, _) = getVuforiaDatasetFilePaths()
         let values = getXMLAttributeValues(filePath: filePath, elementName: "ImageTarget", attributeNames: ["name"])
         guard let targetNames = values["name"] else {
@@ -41,6 +41,8 @@ class VuforiaWorker {
                 initAR(config, 0, cFileName, pointer, count)
                 
                 self.initDone(cFileName, cTargetNames)
+                
+                callback(Int(count))
             }
         }
     }
