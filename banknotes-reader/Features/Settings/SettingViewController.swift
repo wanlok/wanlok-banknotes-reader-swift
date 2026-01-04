@@ -11,7 +11,6 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
     let defaults = UserDefaults.standard
     
     let titleSubtitleAccessoryTypeTableViewCellIdentifier: String = "TitleSubtitleAccessoryTypeTableViewCell"
-    let titleSliderTableViewCellIdentifier: String = "TitleSliderTableViewCell"
     
     var sections:  [(title: String, rows: [Row])] {
         fatalError("Subclasses must override sections")
@@ -23,7 +22,8 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: "TitleSliderTableViewCell", bundle: nil), forCellReuseIdentifier: titleSliderTableViewCellIdentifier)
+        tableView.register(UINib(nibName: "TitleSliderTableViewCell", bundle: nil), forCellReuseIdentifier: TitleSliderTableViewCell.identifier)
+        tableView.register(UINib(nibName: "TitleSwitchTableViewCell", bundle: nil), forCellReuseIdentifier: TitleSwitchTableViewCell.identifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +59,8 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
             cell = getTitleSubtitleAccessoryTypeTableViewCell(tableView, row)
         } else if let row = row as? TitleMinMaxValueRow {
             cell = getTitleSliderTableViewCell(tableView, indexPath, row)
+        } else if let row = row as? TitleBoolRow {
+            cell = getTitleSwitchTableViewCell(tableView, indexPath, row)
         } else {
             fatalError("tableView cellForRowAt")
         }
@@ -84,7 +86,7 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func getTitleSliderTableViewCell(_ tableView: UITableView, _ indexPath: IndexPath, _ row: TitleMinMaxValueRow) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: titleSliderTableViewCellIdentifier, for: indexPath) as? TitleSliderTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TitleSliderTableViewCell.identifier, for: indexPath) as? TitleSliderTableViewCell else {
             fatalError("getTitleSliderTableViewCell")
         }
         cell.indexPath = indexPath
@@ -96,11 +98,26 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
+    func getTitleSwitchTableViewCell(_ tableView: UITableView, _ indexPath: IndexPath, _ row: TitleBoolRow) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TitleSwitchTableViewCell.identifier, for: indexPath) as? TitleSwitchTableViewCell else {
+            fatalError("getTitleSwitchTableViewCell")
+        }
+        cell.indexPath = indexPath
+        cell.callback = tableViewCellSwitchValueChanged
+        cell.titleLabel.text = row.title
+        cell.aSwitch.isOn = row.bool
+        return cell
+    }
+    
     func isRowSelected(_ key: String, _ index: Int) -> UITableViewCell.AccessoryType? {
         return defaults.integer(forKey: key) == index ? .checkmark : nil
     }
     
     func tableViewCellSliderEnded(_ indexPath: IndexPath, _ value: Float) {
         fatalError("Subclasses must override tableViewCellSliderEnded")
+    }
+    
+    func tableViewCellSwitchValueChanged(_ indexPath: IndexPath, _ value: Bool) {
+        fatalError("Subclasses must override tableViewCellSwitchValueChanged")
     }
 }

@@ -17,6 +17,7 @@ setting_landing_language_and_voice="語言及聲音設定";
 setting_landing_language="語言";
 setting_landing_voice_over_on="已開啟";
 setting_landing_voice_over_off="已關閉";
+setting_landing_is_voice_enabled="發聲";
 setting_landing_voice="聲音";
 setting_landing_rate="速度";
 setting_landing_pitch="音調";

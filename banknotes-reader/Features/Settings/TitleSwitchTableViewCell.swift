@@ -1,37 +1,37 @@
 //
-//  TitleSliderTableViewCell.swift
+//  TitleSwitchTableViewCell.swift
 //  banknotes-reader
 //
-//  Created by wanlok on 21/12/2025.
+//  Created by wanlok on 4/1/2026.
 //
 
 import UIKit
 
-class TitleSliderTableViewCell: UITableViewCell {
-    static let identifier = "TitleSliderTableViewCell"
+class TitleSwitchTableViewCell: UITableViewCell {
+    static let identifier = "TitleSwitchTableViewCell"
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var aSwitch: UISwitch!
     
     var indexPath: IndexPath?
-    var callback: ((_ indexPath: IndexPath, _ value: Float) -> Void)?
+    var callback: ((_ indexPath: IndexPath, _ value: Bool) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        slider.addTarget(self, action: #selector(sliderEnded(_:)), for: [.touchUpInside, .touchUpOutside])
+        aSwitch.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         // Configure the view for the selected state
     }
     
-    @objc private func sliderEnded(_ sender: UISlider) {
+    @objc private func switchValueChanged(_ sender: UISwitch) {
         guard let indexPath = indexPath, let callback = callback else {
             return
         }
-        callback(indexPath, sender.value)
+        callback(indexPath, sender.isOn)
     }
 }

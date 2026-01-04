@@ -17,6 +17,7 @@ setting_landing_language_and_voice="Language and Voice Settings";
 setting_landing_language="Language";
 setting_landing_voice_over_on="On";
 setting_landing_voice_over_off="Off";
+setting_landing_is_voice_enabled="Enable Voice";
 setting_landing_voice="Voice";
 setting_landing_rate="Rate";
 setting_landing_pitch="Pitch";

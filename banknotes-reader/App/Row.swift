@@ -19,3 +19,8 @@ struct TitleMinMaxValueRow: Row {
     let max: Float
     let value: Float
 }
+
+struct TitleBoolRow: Row {
+    let title: String
+    let bool: Bool
+}
