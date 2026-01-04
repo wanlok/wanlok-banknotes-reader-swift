@@ -34,9 +34,10 @@ class ARKitViewController: AmountDetectionViewController, ARSCNViewDelegate {
                 detectionImages.insert(referenceImage)
             }
             
-            let configuration = ARWorldTrackingConfiguration()
-            configuration.detectionImages = detectionImages
+            let configuration = ARImageTrackingConfiguration()
+            configuration.trackingImages = detectionImages
             configuration.maximumNumberOfTrackedImages = 1
+            configuration.isAutoFocusEnabled = true
 
             self.arscnView.session.run(configuration)
         }
