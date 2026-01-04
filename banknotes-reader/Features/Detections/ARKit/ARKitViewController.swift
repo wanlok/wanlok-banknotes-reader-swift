@@ -12,18 +12,18 @@ import CoreData
 class ARKitViewController: AmountDetectionViewController, ARSCNViewDelegate {
     
     @IBOutlet weak var arscnView: ARSCNView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         arscnView.delegate = self
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         getBanknotes() { rows in
             var detectionImages: Set<ARReferenceImage> = []
-
+            
             for row in rows {
                 guard let data = row.imageData, let cgImage = UIImage(data: data)?.cgImage else {
                     continue
@@ -38,8 +38,12 @@ class ARKitViewController: AmountDetectionViewController, ARSCNViewDelegate {
             configuration.trackingImages = detectionImages
             configuration.maximumNumberOfTrackedImages = 1
             configuration.isAutoFocusEnabled = true
-
+            
             self.arscnView.session.run(configuration)
+            
+            if rows.count == 0 {
+                showEmptyDatasetAlert(self, self.defaults)
+            }
         }
     }
     

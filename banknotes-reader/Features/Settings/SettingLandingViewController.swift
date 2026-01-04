@@ -58,13 +58,8 @@ class SettingLandingViewController: SettingViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             navigationController?.pushViewController(DetectionMethodViewController(), animated: true)
-        } else if indexPath.section == 0 && indexPath.row == 1 { // Dataset
-            let index = defaults.integer(forKey: "detectionMethod")
-            if index == 0 {
-                navigationController?.pushViewController(ARKitDatasetViewController(), animated: true)
-            } else if index == 1 {
-                navigationController?.pushViewController(VuforiaDatasetViewController(), animated: true)
-            }
+        } else if indexPath.section == 0 && indexPath.row == 1 {
+            navigateDatasetViewController(navigationController, defaults)
         } else if indexPath.section == 1 && indexPath.row == 0 {
             navigationController?.pushViewController(LanguageViewController(), animated: true)
         } else if indexPath.section == 1 && indexPath.row == 3 {
