@@ -46,7 +46,6 @@ class VuforiaView:UIView {
     private var mDepthTexture:MTLTexture!
 
     private var mVideoBackgroundProjectionBuffer:MTLBuffer!
-    private var mGuideViewModelViewProjectionBuffer:MTLBuffer!
 
     /// Used by accessFusionProviderPointers() method to avoid logging every frame
     private var mLastLog = Date().timeIntervalSinceReferenceDate
@@ -86,8 +85,6 @@ class VuforiaView:UIView {
         
         // Video background projection matrix buffer
         mVideoBackgroundProjectionBuffer = mMetalDevice.makeBuffer(length: MemoryLayout<Float>.size * 16, options: [])
-        // Guide view model view projection matrix buffer
-        mGuideViewModelViewProjectionBuffer = mMetalDevice.makeBuffer(length: MemoryLayout<Float>.size * 16, options: [])
 
         // Fragment depth stencil
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
@@ -224,18 +221,11 @@ class VuforiaView:UIView {
             mRenderer.renderVideoBackground(encoder: encoder, projectionMatrix: mVideoBackgroundProjectionBuffer, mesh: getVideoBackgroundMesh().pointee)
 
             encoder.setDepthStencilState(mDepthStencilState)
-            
-            // 20251101 Avoid rendering the cube with axes
-//            var worldOriginProjectionMatrix = matrix_float4x4()
-//            var worldOriginModelViewMatrix = matrix_float4x4()
-//            if (getOrigin(&worldOriginProjectionMatrix.columns, &worldOriginModelViewMatrix.columns)) {
-//                mRenderer.renderWorldOrigin(encoder: encoder, projectionMatrix: worldOriginProjectionMatrix, modelViewMatrix: worldOriginModelViewMatrix)
-//            }
 
             var trackableProjection = matrix_float4x4()
             var trackableModelView = matrix_float4x4()
             var trackableScaledModelView = matrix_float4x4()
-            
+
             // Render image target bounding box if detected
             if (getImageTargetResult(&trackableProjection.columns, &trackableModelView.columns, &trackableScaledModelView.columns)) {
                 mRenderer.renderImageTarget(encoder: encoder,
@@ -244,19 +234,6 @@ class VuforiaView:UIView {
                                             scaledModelViewMatrix: trackableScaledModelView)
             }
 
-            var guideViewImageInfo: VuImageInfo = VuImageInfo()
-            var guideViewImageHasChanged: VuBool = VuBool();
-            // Render model target bounding box if detected, if not render guide view
-            if (getModelTargetResult(&trackableProjection.columns, &trackableModelView.columns, &trackableScaledModelView.columns)) {
-                mRenderer.renderModelTarget(encoder: encoder,
-                                            projectionMatrix: trackableProjection,
-                                            modelViewMatrix: trackableModelView,
-                                            scaledModelViewMatrix: trackableScaledModelView)
-                
-            } else if (getModelTargetGuideView(mGuideViewModelViewProjectionBuffer.contents(), &guideViewImageInfo, &guideViewImageHasChanged)) {
-                mRenderer.renderModelTargetGuideView(encoder: encoder, modelViewProjectionMatrix: mGuideViewModelViewProjectionBuffer, guideViewImageInfo: &guideViewImageInfo, guideViewImageHasChanged: guideViewImageHasChanged)
-            }
-            
             //accessFusionProviderPointers()
         }
         

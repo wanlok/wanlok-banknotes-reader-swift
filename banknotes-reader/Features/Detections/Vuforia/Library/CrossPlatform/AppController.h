@@ -33,9 +33,6 @@ public:
     using InitDoneCallback = std::function<void()>;
     using DetectionCallback = std::function<void(const char* targetName)>;
 
-    /// 20251102 Added the following to get image target
-    DetectionCallback mDetectionCallback = nullptr;
-    
     /// Struct to group initialization parameters passed to initAR
     class InitConfig
     {
@@ -151,6 +148,8 @@ private: // data members
     VuforiaEngineErrorCallback mVuforeEngineErrorCallback;
     /// Callback to inform the user that initialization is complete
     InitDoneCallback mInitDoneCallback;
+    /// Callback to inform the user which target (if any) is currently detected
+    DetectionCallback mDetectionCallback;
 
     /// Vuforia Engine instance
     VuEngine* mEngine{ nullptr };
